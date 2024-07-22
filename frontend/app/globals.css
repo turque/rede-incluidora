@@ -30,4 +30,12 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+cores {
+  colorprimary: #F0AF0A;
+  secondary: #C50AF0;
+  text-balance: #0AF0A1
+
+
+}
 }
