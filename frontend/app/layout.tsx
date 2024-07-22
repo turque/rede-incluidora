@@ -1,11 +1,11 @@
+import { Footer, Header } from "@/components";
+import { Grid, GridItem } from '@chakra-ui/react';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Grid, GridItem } from '@chakra-ui/react'
-import { Header, Footer } from "@/components";
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ["latin"] });
-import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: "Rede Incluidora",
@@ -33,7 +33,7 @@ export default function RootLayout({
             <GridItem pl='2' bgGradient='linear(to-r, #F0AF0A, #F0790A)' area={'header'}>
               <Header />
             </GridItem>
-            <GridItem pl='2' bg='green.300' area={'main'}>
+            <GridItem pl='2' area={'main'}>
               {children}
             </GridItem>
             <GridItem pl='2' bg='blue.300' area={'footer'}>
