@@ -1,5 +1,5 @@
 import { Button, IconButton, Input } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons'
+// import { SearchIcon } from '@chakra-ui/icons'
 
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
       <div>
         <Input placeholder='Digite aqui a especialidade ou nome do profissional' size='lg' color='teal' _placeholder={{ opacity: 0.4, color: 'inherit' }} />
         <Button colorScheme='teal' size='lg'>
-          <IconButton aria-label='Search database' icon={<SearchIcon />} />
+          {/* <IconButton aria-label='Search database' icon={<SearchIcon />} /> */}
           Button
         </Button>
       </div>
