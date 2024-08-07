@@ -6,7 +6,7 @@ const meta: Meta<AvatarProps> = {
   title: "Atoms/Avatar",
   component: Avatar,
   argTypes: {
-    className: { type: "string" },
+    // className: { type: "string" },
     size: { type: "string" },
   },
 };
@@ -35,9 +35,15 @@ export const AvatarLarge: StoryObj<AvatarProps> = {
   },
 };
 
+export const AvatarExtraLarge: StoryObj<AvatarProps> = {
+  args: {
+    size: "xl",
+  },
+};
+
 export const AvatarImage: StoryObj<AvatarProps> = {
   args: {
     size: "lg",
-    image: "https://placehold.co/400x400.png",
+    src: "https://placehold.co/400x400.png",
   },
 };
