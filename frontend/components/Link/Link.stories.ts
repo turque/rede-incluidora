@@ -45,3 +45,11 @@ export const Violet: StoryObj<LinkProps> = {
     className: 'theme-violet'
   }
 }
+
+export const Orange: StoryObj<LinkProps> = {
+  args: {
+    children: 'Link',
+    href: '/',
+    className: 'theme-orange'
+  }
+}

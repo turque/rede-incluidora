@@ -97,4 +97,13 @@
     --tertiary: 226, 189, 255;
     --quaternary: 245, 232, 255;
   }
+
+  .theme-orange {
+    --primary: 255, 92, 1;
+    --secondary: 255, 139, 78;
+    --tertiary: 255, 204, 173;
+    --quaternary: 255, 238, 227;
+    --hover: 238, 80, 0;
+    --click: 213, 55, 0;
+  }
 }
