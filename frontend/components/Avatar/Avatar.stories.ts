@@ -8,6 +8,8 @@ const meta: Meta<AvatarProps> = {
   argTypes: {
     // className: { type: "string" },
     size: { type: "string" },
+    name: { type: "string" },
+    src: { type: "string" }
   },
 };
 
@@ -17,33 +19,33 @@ export const Primary: StoryObj<AvatarProps> = {
   args: {},
 };
 
-export const AvatarSmall: StoryObj<AvatarProps> = {
-  args: {
-    size: "sm",
-  },
-};
+// export const AvatarSmall: StoryObj<AvatarProps> = {
+//   args: {
+//     size: "sm",
+//   },
+// };
 
-export const AvatarMedium: StoryObj<AvatarProps> = {
-  args: {
-    size: "md",
-  },
-};
+// export const AvatarMedium: StoryObj<AvatarProps> = {
+//   args: {
+//     size: "md",
+//   },
+// };
 
-export const AvatarLarge: StoryObj<AvatarProps> = {
-  args: {
-    size: "lg",
-  },
-};
+// export const AvatarLarge: StoryObj<AvatarProps> = {
+//   args: {
+//     size: "lg",
+//   },
+// };
 
-export const AvatarExtraLarge: StoryObj<AvatarProps> = {
-  args: {
-    size: "xl",
-  },
-};
+// export const AvatarExtraLarge: StoryObj<AvatarProps> = {
+//   args: {
+//     size: "xl",
+//   },
+// };
 
-export const AvatarImage: StoryObj<AvatarProps> = {
-  args: {
-    size: "lg",
-    src: "https://placehold.co/400x400.png",
-  },
-};
+// export const AvatarImage: StoryObj<AvatarProps> = {
+//   args: {
+//     size: "lg",
+//     src: "https://placehold.co/400x400.png",
+//   },
+// };

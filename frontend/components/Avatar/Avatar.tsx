@@ -1,13 +1,13 @@
 import { Avatar as ChakraAvatar } from '@chakra-ui/react'
 import { AiOutlineUser } from "react-icons/ai"
 
-export interface AvatarProps {
-  src: string;
-  name: string;
-  size: string;
-}
+export type AvatarProps = {
+  src?: string;
+  name?: string;
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+} & React.HTMLAttributes<HTMLDivElement>;
 
-const Avatar({src, name, size }: AvatarProps) => {
+function Avatar({src, name, size }: AvatarProps) {
     return (
       <ChakraAvatar src={src} name={name} size={size} icon={<AiOutlineUser fontSize='2rem'/>} />
     );

@@ -1,4 +1,5 @@
-import { Footer, Header } from "@/components";
+// import { Footer, Header } from "@/components";
+import Avatar from '@/components/Avatar/Avatar';
 import { Grid, GridItem } from '@chakra-ui/react';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -31,13 +32,14 @@ export default function RootLayout({
             gap='1'
           >
             <GridItem pl='2' bgGradient='linear(to-r, #F0AF0A, #F0790A)' area={'header'}>
-              <Header />
+              {/* <Header /> */}
+              <Avatar name='' src='https://bit.ly/dan-abramov'/> 
             </GridItem>
             <GridItem pl='2' area={'main'}>
               {children}
             </GridItem>
             <GridItem pl='2' bg='blue.300' area={'footer'}>
-              <Footer />
+              {/* <Footer /> */}
             </GridItem>
           </Grid>
         </Providers>
