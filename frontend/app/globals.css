@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
+/* @font-face {
   font-family: "Mulish";
   src: url("../fonts/Mulish-Regular.woff2") format("woff2"),
     url("../fonts/Mulish-Regular.woff") format("woff");
@@ -13,7 +13,7 @@
 
 * {
   font-family: "Mulish", sans-serif;
-}
+} */
 
 @layer base {
   :root {

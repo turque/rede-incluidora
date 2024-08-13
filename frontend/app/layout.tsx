@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from './providers';
+import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,7 @@ export default function RootLayout({
             gap='1'
           >
             <GridItem pl='2' bgGradient='linear(to-r, #F0AF0A, #F0790A)' area={'header'}>
-              {/* <Header /> */}
+              <Header />
             </GridItem>
             <GridItem pl='2' area={'main'}>
               {children}
