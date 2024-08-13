@@ -20,4 +20,11 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
 };
+
+module.exports = {
+  addons: ['@chakra-ui/storybook-addon'],
+  features: {
+    emotionAlias: false,
+  },
+}
 export default config;

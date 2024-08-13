@@ -1,15 +1,19 @@
 import { Avatar as ChakraAvatar } from '@chakra-ui/react'
-import { AiOutlineUser } from "react-icons/ai"
+import { AiOutlineUser } from 'react-icons/ai'
 
 export type AvatarProps = {
-  src?: string;
+  size?: string;
   name?: string;
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+  src?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-function Avatar({src, name, size }: AvatarProps) {
+const Avatar = ({
+    size = 'xl',
+    name,
+    src,
+  }: AvatarProps) => {
     return (
-      <ChakraAvatar src={src} name={name} size={size} icon={<AiOutlineUser fontSize='2rem'/>} />
+      <ChakraAvatar src={src} name={name} size='2xl' icon={<AiOutlineUser fontSize='2rem'/>} />
     );
   };
 
@@ -17,10 +21,10 @@ function Avatar({src, name, size }: AvatarProps) {
 export default Avatar;
 
 // import { Avatar as ChakraAvatar } from '@chakra-ui/react'
-// import { AiOutlineUser } from "react-icons/ai"
+// import { AiOutlineUser } from 'react-icons/ai'
 
 // export type AvatarProps = {
-//   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+//   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 //   name?: string;
 //   src?: string;
 // } & React.HTMLAttributes<HTMLDivElement>;
@@ -39,24 +43,24 @@ export default Avatar;
 
 
 
-// import classNames from "classnames";
-// import AvatarIcon from "./AvatarIcon";
-// import AvatarImage from "./AvatarImage";
-// import React from "react";
+// import classNames from 'classnames';
+// import AvatarIcon from './AvatarIcon';
+// import AvatarImage from './AvatarImage';
+// import React from 'react';
 
 
 
 // const avatarSizeMap = {
-//   xs: "w-5 h-5",
-//   sm: "w-6 h-6",
-//   md: "w-8 h-8",
-//   lg: "w-9 h-9",
+//   xs: 'w-5 h-5',
+//   sm: 'w-6 h-6',
+//   md: 'w-8 h-8',
+//   lg: 'w-9 h-9',
 // };
 
 // const Avatar = ({
-//   size = "xs",
+//   size = 'xs',
 //   image,
-//   descricao = "",
+//   descricao = ',
 //   className,
 //   ...rest
 // }: AvatarProps) => {
@@ -71,7 +75,7 @@ export default Avatar;
 //   return (
 //     <div
 //       className={classNames(
-//         "relative rounded-full bg-slate-100 flex items-center justify-center text-slate-400",
+//         'relative rounded-full bg-slate-100 flex items-center justify-center text-slate-400',
 //         avatarSizeClass,
 //         className
 //       )}
