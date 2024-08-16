@@ -1,58 +1,113 @@
 'use client'
-import { Avatar, Button, HStack, Box, Link, Image } from "@chakra-ui/react";
+import { Avatar, Button, HStack, Box, Link, Image, Stack, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import NextLink from "next/link";
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <header className="bg-white shadow-sm py-4">
-      <div className="container mx-auto flex justify-between items-center px-24">
-        {/* Logo */}
-        <Box>
-          <NextLink href="/" passHref>
-            <Image src="img/rede-incluidora-logo.svg" alt="Logotipo com um girasoll e os dizeres Rede Incluidora" />
-          </NextLink>
-        </Box>
+    <header className="bg-white shadow-sm py-0">
+      <Box className="container mx-auto" px={{ base: 4, md: 12 }}>
+        <Stack
+          direction={{ base: "row", md: "row" }}
+          justify={{ base: "space-between", md: "space-between" }}
+          align="center"
+        >
+          {/* Logo */}
+          <Box>
+            <NextLink href="/" passHref>
+              <Image src="img/rede-incluidora-logo.svg" alt="Logotipo com um girassol e os dizeres Rede Incluidora" boxSize={{ base: "120px", md: "160px" }} />
+            </NextLink>
+          </Box>
 
-        {/* Menu */}
-        <HStack spacing={2}>
-          <NextLink href="/produtos-servicos" passHref>
-            <Button as={Link} variant="ghost" colorScheme="orange">
-              Produtos e Serviços
-            </Button>
-          </NextLink>
+          {/* Menu - Desktop */}
+          <HStack spacing={4} display={{ base: "none", md: "flex" }}>
+            <NextLink href="/produtos-servicos" passHref>
+              <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
+                Produtos e Serviços
+              </Button>
+            </NextLink>
 
-          <NextLink href="/pergunte-ao-especialista" passHref>
-            <Button as={Link} variant="ghost" colorScheme="orange">
-              Pergunte ao Especialista
-            </Button>
-          </NextLink>
+            <NextLink href="/pergunte-ao-especialista" passHref>
+              <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
+                Pergunte ao Especialista
+              </Button>
+            </NextLink>
 
-          {isAuthenticated ? (
-            <Avatar
-              name="Nome do Usuário"
-              src=""
-              size="md"
-            />
-          ) : (
-            <>
-              <NextLink href="/entrar" passHref>
-                <Button as={Link} colorScheme="orange">
-                  Entrar
-                </Button>
-              </NextLink>
+            {isAuthenticated ? (
+              <Avatar name="Nome do Usuário" src="" size="sm" />
+            ) : (
+              <>
+                <NextLink href="/entrar" passHref>
+                  <Button as={Link} colorScheme="orange" size="sm">
+                    Entrar
+                  </Button>
+                </NextLink>
 
-              <NextLink href="/criar-conta" passHref>
-                <Button as={Link} colorScheme="orange" variant="outline">
-                  Criar Conta
-                </Button>
-              </NextLink>
-            </>
-          )}
-        </HStack>
-      </div>
+                <NextLink href="/criar-conta" passHref>
+                  <Button as={Link} colorScheme="orange" variant="outline" size="sm">
+                    Criar Conta
+                  </Button>
+                </NextLink>
+              </>
+            )}
+          </HStack>
+
+          {/* Menu Hamburger - Mobile */}
+          <IconButton
+            aria-label="Open menu"
+            icon={<HamburgerIcon />}
+            display={{ base: "flex", md: "none" }}
+            onClick={onOpen}
+            variant="outline"
+            colorScheme="orange"
+          />
+
+          <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
+              <DrawerBody>
+                <Stack spacing={4}>
+                  <NextLink href="/produtos-servicos" passHref>
+                    <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
+                      Produtos e Serviços
+                    </Button>
+                  </NextLink>
+
+                  <NextLink href="/pergunte-ao-especialista" passHref>
+                    <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
+                      Pergunte ao Especialista
+                    </Button>
+                  </NextLink>
+
+                  {isAuthenticated ? (
+                    <Avatar name="Nome do Usuário" src="" size="md" />
+                  ) : (
+                    <>
+                      <NextLink href="/entrar" passHref>
+                        <Button as={Link} colorScheme="orange" width="100%" onClick={onClose}>
+                          Entrar
+                        </Button>
+                      </NextLink>
+
+                      <NextLink href="/criar-conta" passHref>
+                        <Button as={Link} colorScheme="orange" variant="outline" width="100%" onClick={onClose}>
+                          Criar Conta
+                        </Button>
+                      </NextLink>
+                    </>
+                  )}
+                </Stack>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </Stack>
+      </Box>
     </header>
   );
 };
