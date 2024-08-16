@@ -1,12 +1,11 @@
-// import { Footer, Header } from "@/components";
-import { Grid, GridItem } from '@chakra-ui/react';
+import { ChakraProvider } from "@chakra-ui/react";
+import './globals.css';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from './providers';
+import { ReactNode } from "react";
+import { Flex } from "@chakra-ui/react";
 import Header from '@/components/Header';
+import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rede Incluidora",
@@ -16,32 +15,20 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body className={inter.className}>
-        <Providers>
-          <Grid
-            templateAreas={`"header header"
-                    "main main"
-                    "footer footer"`}
-            gridTemplateRows={'60px 2fr 50px'}
-            gridTemplateColumns={'150px 1fr'}
-            h='200px'
-            gap='1'
-          >
-            <GridItem pl='2' bgGradient='linear(to-r, #F0AF0A, #F0790A)' area={'header'}>
-              <Header />
-            </GridItem>
-            <GridItem pl='2' area={'main'}>
+    <html lang="pt-BR">
+      <body>
+        <ChakraProvider>
+          <Flex minH="100vh" direction="column">
+            <Header />
+            <Flex as="main" flex="1" justify="center" align="center" p={4} bg="orange.50">
               {children}
-            </GridItem>
-            <GridItem pl='2' bg='blue.300' area={'footer'}>
-              {/* <Footer /> */}
-            </GridItem>
-          </Grid>
-        </Providers>
+            </Flex>
+            <Footer />
+          </Flex>
+        </ChakraProvider>
       </body>
     </html>
   );
