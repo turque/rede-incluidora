@@ -25,13 +25,13 @@ const Header = () => {
 
           {/* Menu - Desktop */}
           <HStack spacing={4} display={{ base: "none", md: "flex" }}>
-            <NextLink href="/produtos-servicos" passHref>
+            <NextLink href="/em-breve" passHref>
               <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
                 Produtos e Serviços
               </Button>
             </NextLink>
 
-            <NextLink href="/pergunte-ao-especialista" passHref>
+            <NextLink href="/em-breve" passHref>
               <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
                 Pergunte ao Especialista
               </Button>
@@ -41,13 +41,13 @@ const Header = () => {
               <Avatar name="Nome do Usuário" src="" size="sm" />
             ) : (
               <>
-                <NextLink href="/entrar" passHref>
+                <NextLink href="/em-breve" passHref>
                   <Button as={Link} colorScheme="orange" size="sm">
                     Entrar
                   </Button>
                 </NextLink>
 
-                <NextLink href="/criar-conta" passHref>
+                <NextLink href="/em-breve" passHref>
                   <Button as={Link} colorScheme="orange" variant="outline" size="sm">
                     Criar Conta
                   </Button>
@@ -73,13 +73,13 @@ const Header = () => {
               <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
               <DrawerBody>
                 <Stack spacing={4}>
-                  <NextLink href="/produtos-servicos" passHref>
+                  <NextLink href="/em-breve" passHref>
                     <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
                       Produtos e Serviços
                     </Button>
                   </NextLink>
 
-                  <NextLink href="/pergunte-ao-especialista" passHref>
+                  <NextLink href="/em-breve" passHref>
                     <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
                       Pergunte ao Especialista
                     </Button>
@@ -89,13 +89,13 @@ const Header = () => {
                     <Avatar name="Nome do Usuário" src="" size="md" />
                   ) : (
                     <>
-                      <NextLink href="/entrar" passHref>
+                      <NextLink href="/em-breve" passHref>
                         <Button as={Link} colorScheme="orange" width="100%" onClick={onClose}>
                           Entrar
                         </Button>
                       </NextLink>
 
-                      <NextLink href="/criar-conta" passHref>
+                      <NextLink href="/em-breve" passHref>
                         <Button as={Link} colorScheme="orange" variant="outline" width="100%" onClick={onClose}>
                           Criar Conta
                         </Button>
