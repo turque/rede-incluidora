@@ -1,23 +1,32 @@
-# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM node:20 as build-stage
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package.json yarn.lock* ./
+RUN yarn install --frozen-lockfile
+
+# Rebuild the source code only when needed
+FROM base AS builder
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN yarn build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+ENV NODE_ENV production
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY --from=builder /app/next.config.js ./next.config.js
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
-RUN npm install
+EXPOSE 3000
 
-COPY ./ /app/
-
-ARG VITE_API_URL=${VITE_API_URL}
-
-RUN npm run build
-
-
-# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:1
-
-COPY --from=build-stage /app/dist/ /usr/share/nginx/html
-
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx-backend-not-found.conf /etc/nginx/extra-conf.d/backend-not-found.conf
+CMD ["yarn", "start"]
