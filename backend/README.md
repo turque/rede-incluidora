@@ -1,4 +1,4 @@
-# FastAPI Project - Backend
+# Rede Incluidora Project - Backend
 
 ## Requirements
 
