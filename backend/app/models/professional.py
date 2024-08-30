@@ -1,4 +1,3 @@
-from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
 from .users import User
@@ -20,9 +19,7 @@ class ProfessionalCreate(ProfessionalBase):
 
 
 class ProfessionalRegister(SQLModel):
-    email: EmailStr = Field(max_length=255)
-    password: str = Field(min_length=8, max_length=40)
-    full_name: str | None = Field(default=None, max_length=255)
+    pass
 
 
 # Properties to receive via API on update, all are optional
@@ -38,7 +35,8 @@ class ProfessionalUpdate(ProfessionalBase):
 # Database model, database table inferred from class name
 class Professional(ProfessionalBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    user_id: "User" = Relationship(back_populates="user_data")
+    user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
+    user: "User" = Relationship(back_populates="user_data")
 
 
 # Properties to return via API, id is always required
