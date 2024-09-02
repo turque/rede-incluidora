@@ -49,11 +49,11 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SENTRY_DSN: HttpUrl | None = None
-    POSTGRES_SERVER: str
+    POSTGRES_SERVER: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_USER: str = "postgres"
     POSTGRES_PASSWORD: str = "changethis"
-    POSTGRES_DB: str = "rede-incluidora"
+    POSTGRES_DB: str = "app"
 
     @computed_field  # type: ignore[misc]
     @property
