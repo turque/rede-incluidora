@@ -2,7 +2,7 @@ from datetime import date
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from .professional import Professional
+from .professionals import Professional
 
 
 # Shared properties
