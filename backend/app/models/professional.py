@@ -18,10 +18,6 @@ class ProfessionalCreate(ProfessionalBase):
     pass
 
 
-class ProfessionalRegister(SQLModel):
-    pass
-
-
 # Properties to receive via API on update, all are optional
 class ProfessionalUpdate(ProfessionalBase):
     self_description: str | None = Field(default=None, max_length=1024)
