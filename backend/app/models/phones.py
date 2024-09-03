@@ -5,12 +5,12 @@ from .users import User
 
 # Shared properties
 class PhoneBase(SQLModel):
-    phone_number: str | None = Field(default=None, max_length=30)
-    phone_type: str | None = Field(default=None, max_length=100)
-    has_whatsapp: bool = False
-    has_telegram: bool = False
-    is_primary: bool = False
-    usage_type: str | None = Field(default=None, max_length=100)
+    phone_number: str | None = Field(default=None)
+    phone_type: str | None = Field(default=None)
+    has_whatsapp: bool = Field(default=False)
+    has_telegram: bool = Field(default=False)
+    is_primary: bool = Field(default=False)
+    usage_type: str | None = Field(default=None)
 
 
 # Properties to receive via API on creation
@@ -27,7 +27,7 @@ class PhoneUpdate(PhoneBase):
 class Phone(PhoneBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
-    user: "User" = Relationship(back_populates="user_phone")
+    user: User | None = Relationship(back_populates="phones")
 
 
 # Properties to return via API, id is always required

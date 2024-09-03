@@ -7,10 +7,10 @@ from .professionals import Professional
 
 # Shared properties
 class SpecializationBase(SQLModel):
-    specialization: str | None = Field(default=None, max_length=512)
-    description: str | None = Field(default=None, max_length=1024)
-    certification: str | None = Field(default=None, max_length=512)
-    institution: str | None = Field(default=None, max_length=512)
+    specialization: str | None = Field(default=None)
+    description: str | None = Field(default=None)
+    certification: str | None = Field(default=None)
+    institution: str | None = Field(default=None)
     year_obtained: date | None = Field(default=None)
 
 

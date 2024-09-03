@@ -5,11 +5,11 @@ from .users import User
 
 # Shared properties
 class SocialMediaBase(SQLModel):
-    platform: str | None = Field(default=None, max_length=256)
-    username: str | None = Field(default=None, max_length=256)
-    profile_url: str | None = Field(default=None, max_length=1024)
-    is_primary: bool = False
-    usage_type: str | None = Field(default=None, max_length=100)
+    platform: str | None = Field(default=None)
+    username: str | None = Field(default=None)
+    profile_url: str | None = Field(default=None)
+    is_primary: bool | None = Field(default=False)
+    usage_type: str | None = Field(default=None)
 
 
 # Properties to receive via API on creation
@@ -26,7 +26,7 @@ class SocialMediaUpdate(SocialMediaBase):
 class SocialMedia(SocialMediaBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
-    user: "User" = Relationship(back_populates="user_social_media")
+    user: User | None = Relationship(back_populates="social_media_contacts")
 
 
 # Properties to return via API, id is always required

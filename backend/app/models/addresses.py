@@ -5,13 +5,13 @@ from .users import User
 
 # Shared properties
 class AddressBase(SQLModel):
-    street: str | None = Field(default=None, max_length=256)
-    number: str | None = Field(default=None, max_length=10)
-    complement: str | None = Field(default=None, max_length=256)
-    neighborhood: str | None = Field(default=None, max_length=256)
-    city: str | None = Field(default=None, max_length=256)
-    state: str | None = Field(default=None, max_length=256)
-    postal_code: str | None = Field(default=None, max_length=15)
+    street: str | None
+    number: str | None
+    complement: str | None
+    neighborhood: str | None
+    city: str | None
+    state: str | None
+    postal_code: str | None
 
 
 # Properties to receive via API on creation
@@ -27,8 +27,8 @@ class AddressUpdate(AddressBase):
 # Database model, database table inferred from class name
 class Address(AddressBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
-    user: "User" = Relationship(back_populates="user_address")
+    user_id: int | None = Field(default=None, foreign_key="user.id")
+    user: User | None = Relationship(back_populates="addresses")
 
 
 # Properties to return via API, id is always required
