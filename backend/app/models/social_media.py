@@ -1,6 +1,9 @@
+from typing import TYPE_CHECKING
+
 from sqlmodel import Field, Relationship, SQLModel
 
-from .users import User
+if TYPE_CHECKING:
+    from .users import User  # noqa: F401
 
 
 # Shared properties
@@ -12,6 +15,13 @@ class SocialMediaBase(SQLModel):
     usage_type: str | None = Field(default=None)
 
 
+# Database model, database table inferred from class name
+class SocialMedia(SocialMediaBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
+    user: "User" = Relationship(back_populates="social_media_contacts")
+
+
 # Properties to receive via API on creation
 class SocialMediaCreate(SocialMediaBase):
     pass
@@ -20,13 +30,6 @@ class SocialMediaCreate(SocialMediaBase):
 # Properties to receive via API on update, all are optional
 class SocialMediaUpdate(SocialMediaBase):
     pass
-
-
-# Database model, database table inferred from class name
-class SocialMedia(SocialMediaBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
-    user: User | None = Relationship(back_populates="social_media_contacts")
 
 
 # Properties to return via API, id is always required

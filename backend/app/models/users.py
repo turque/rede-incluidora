@@ -1,10 +1,12 @@
+from typing import TYPE_CHECKING
+
 from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
-Address = "app.models.addresses.Address"
-Phone = "app.models.phones.Phone"
-ProfessionalData = "app.models.professionals.ProfessionalData"
-SocialMediaContact = "app.models.social_media.SocialMediaContact"
+if TYPE_CHECKING:
+    from .addresses import Address  # noqa: F401
+    from .phones import Phone  # noqa: F401
+    from .social_media import SocialMedia  # noqa: F401
 
 
 # Shared properties
@@ -14,6 +16,15 @@ class UserBase(SQLModel):
     is_active: bool | None = Field(default=False)
     is_superuser: bool | None = Field(default=False)
     full_name: str | None = Field(default=None)
+
+
+# Database model, database table inferred from class name
+class User(UserBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    hashed_password: str
+    addresses: list["Address"] = Relationship(back_populates="user")
+    phones: list["Phone"] = Relationship(back_populates="user")
+    social_media: list["SocialMedia"] = Relationship(back_populates="user")
 
 
 # Properties to receive via API on creation
@@ -29,7 +40,7 @@ class UserRegister(SQLModel):
 
 # Properties to receive via API on update, all are optional
 class UserUpdate(UserBase):
-    email: EmailStr | None = Field(default=None, max_length=255)  # type: ignore
+    email: EmailStr | None = Field(default=None, max_length=255)
     password: str | None = Field(default=None, min_length=8, max_length=40)
 
 
@@ -41,18 +52,6 @@ class UserUpdateMe(SQLModel):
 class UpdatePassword(SQLModel):
     current_password: str = Field(min_length=8, max_length=40)
     new_password: str = Field(min_length=8, max_length=40)
-
-
-# Database model, database table inferred from class name
-class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    hashed_password: str
-    addresses: list["Address"] = Relationship(back_populates="user")  # type: ignore
-    phones: list["Phone"] = Relationship(back_populates="user")  # type: ignore
-    social_media_contacts: list["SocialMediaContact"] = Relationship(  # type: ignore
-        back_populates="user"
-    )
-    professional_data: list["ProfessionalData"] = Relationship(back_populates="user")  # type: ignore
 
 
 # Properties to return via API, id is always required

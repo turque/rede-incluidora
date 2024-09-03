@@ -1,7 +1,10 @@
+from typing import TYPE_CHECKING
+
 from sqlmodel import Field, Relationship, SQLModel
 
-from .insurances import Insurance
-from .professionals import ProfessionalData
+if TYPE_CHECKING:
+    from .insurances import Insurance  # noqa: F401
+    from .professionals import ProfessionalData  # noqa: F401
 
 
 class ProfessionalInsurance(SQLModel, table=True):

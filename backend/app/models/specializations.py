@@ -1,8 +1,10 @@
 from datetime import date
+from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from .professionals import Professional
+if TYPE_CHECKING:
+    from .professionals import Professional  # noqa: F401
 
 
 # Shared properties
@@ -14,6 +16,15 @@ class SpecializationBase(SQLModel):
     year_obtained: date | None = Field(default=None)
 
 
+# Database model, database table inferred from class name
+class Specialization(SpecializationBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    prefessional_id: int | None = Field(
+        default=None, foreign_key="professional.id", nullable=False
+    )
+    professional: "Professional" = Relationship(back_populates="professional_data")
+
+
 # Properties to receive via API on creation
 class SpecializationCreate(SpecializationBase):
     pass
@@ -22,15 +33,6 @@ class SpecializationCreate(SpecializationBase):
 # Properties to receive via API on update, all are optional
 class SpecializationUpdate(SpecializationBase):
     pass
-
-
-# Database model, database table inferred from class name
-class Specialization(SpecializationBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    prefessional_id: int | None = Field(
-        default=None, foreign_key="professional.id", nullable=False
-    )
-    professional: "Professional" = Relationship(back_populates="professional_data")
 
 
 # Properties to return via API, id is always required
