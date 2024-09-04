@@ -42,6 +42,52 @@ cidades = [
     "Manaus",
 ]
 
+insurances_list = [
+    "Unimed",
+    "Bradesco Saúde",
+    "Amil",
+    "SulAmérica",
+    "NotreDame Intermédica",
+    "Hapvida",
+    "São Cristóvão Saúde",
+    "Porto Seguro Saúde",
+    "Prevent Senior",
+    "Allianz Saúde",
+    "GreenLine Saúde",
+    "Biovida Saúde",
+    "Golden Cross",
+    "Intermédica",
+    "Mediservice",
+    "One Health",
+    "Samp",
+    "Trasmontano Saúde",
+    "Viva Saúde",
+    "Vitallis Saúde",
+]
+
+specializations_list = [
+    "Psiquiatria Infantil",
+    "Neuropsiquiatria",
+    "Psicologia Clínica",
+    "Neuropsicologia",
+    "Psicopedagogia",
+    "Terapia Ocupacional",
+    "Fonoaudiologia",
+    "Psicoterapia Cognitivo-Comportamental",
+    "Psicoterapia Familiar",
+    "Psicoterapia de Grupo",
+    "Psicoterapia Psicodinâmica",
+    "Psicoterapia Humanista",
+    "Psicoterapia Integrativa",
+    "Psicoterapia Sistêmica",
+    "Psicoterapia Comportamental",
+    "Psicoterapia Analítica",
+    "Psicoterapia Gestalt",
+    "Psicoterapia Existencial",
+    "Psicoterapia Transpessoal",
+    "Psicoterapia Interpessoal",
+]
+
 
 def create_fake_professional():
     user = User(
@@ -101,7 +147,7 @@ def create_fake_professional():
     )
 
     specialization = Specialization(
-        specialization=fake.job(),
+        specialization=fake.random_element(elements=specializations_list),
         description=fake.text(),
         certification=fake.word(),
         institution=fake.company(),
@@ -109,7 +155,7 @@ def create_fake_professional():
     )
 
     insurance = Insurance(
-        name=fake.company(),
+        name=fake.random_element(elements=insurances_list),
     )
 
     return (
