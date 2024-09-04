@@ -5,7 +5,7 @@ class InsuranceBase(SQLModel):
     name: str | None = Field(default=None)
 
 
-class Insurance(SQLModel, table=True):
+class Insurance(InsuranceBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
 

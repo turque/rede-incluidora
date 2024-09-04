@@ -9,6 +9,6 @@ if TYPE_CHECKING:
 
 class ProfessionalInsurance(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    id_professional: int | None = Field(default=None, foreign_key="professional.id")
-    id_insurance: int | None = Field(default=None, foreign_key="insurance.id")
+    professional_id: int | None = Field(default=None, foreign_key="professional.id")
+    insurance_id: int | None = Field(default=None, foreign_key="insurance.id")
     professional: "Professional" = Relationship(back_populates="insurances")

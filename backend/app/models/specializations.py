@@ -19,7 +19,7 @@ class SpecializationBase(SQLModel):
 # Database model, database table inferred from class name
 class Specialization(SpecializationBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    prefessional_id: int | None = Field(
+    professional_id: int | None = Field(
         default=None, foreign_key="professional.id", nullable=False
     )
     professional: "Professional" = Relationship(back_populates="specializations")
