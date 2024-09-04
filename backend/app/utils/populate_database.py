@@ -23,8 +23,20 @@ engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 # Criar tabelas no banco de dados
 SQLModel.metadata.create_all(engine)
 
-# Inicializar Faker
-fake = Faker()
+# Inicializar Faker com locale pt_BR
+fake = Faker("pt_BR")
+cidades = [
+    "São Paulo",
+    "Rio de Janeiro",
+    "Belo Horizonte",
+    "Porto Alegre",
+    "Curitiba",
+    "Salvador",
+    "Brasília",
+    "Fortaleza",
+    "Recife",
+    "Manaus",
+]
 
 
 def create_fake_professional():
@@ -37,7 +49,7 @@ def create_fake_professional():
         is_superuser=False,
     )
 
-    professional = Professional(
+    professional_data = Professional(
         self_description=fake.text(),
         home_service=fake.boolean(),
         accepts_insurance=fake.boolean(),
@@ -49,10 +61,10 @@ def create_fake_professional():
     address = Address(
         street=fake.street_name(),
         number=fake.building_number(),
-        complement=fake.secondary_address(),
-        neighborhood=fake.city_suffix(),
-        city=fake.city(),
-        state=fake.state_abbr(),
+        complement=fake.address(),
+        neighborhood=fake.bairro(),
+        city=fake.random_element(elements=cidades),
+        state=fake.estado_sigla(),
         postal_code=fake.postcode(),
     )
 
@@ -98,7 +110,7 @@ def create_fake_professional():
 
     return (
         user,
-        professional,
+        professional_data,
         address,
         phone,
         social_media_contact,
@@ -115,7 +127,7 @@ def populate_database():
                 professional,
                 address,
                 phone,
-                social_media_contact,
+                social_media,
                 specialization,
                 insurance,
             ) = create_fake_professional()
@@ -135,8 +147,8 @@ def populate_database():
             session.add(phone)
             session.commit()
 
-            social_media_contact.user_id = user.id
-            session.add(social_media_contact)
+            social_media.user_id = user.id
+            session.add(social_media)
             session.commit()
 
             specialization.professional_id = professional.id
