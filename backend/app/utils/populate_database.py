@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 from faker import Faker
@@ -15,6 +16,9 @@ from app.models import (
     Specialization,
     User,
 )
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Configuração do banco de dados
 # DATABASE_URL = "sqlite:///./test.db"
@@ -121,7 +125,7 @@ def create_fake_professional():
 
 def populate_database():
     with Session(engine) as session:
-        for _ in range(5):
+        for _ in range(30):
             (
                 user,
                 professional,
@@ -168,4 +172,6 @@ def populate_database():
 
 
 if __name__ == "__main__":
+    logger.info("Creating fake datas")
     populate_database()
+    logger.info("Initial fake datas created")
