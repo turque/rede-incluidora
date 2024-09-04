@@ -19,7 +19,7 @@ class SocialMediaBase(SQLModel):
 class SocialMedia(SocialMediaBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
-    user: "User" = Relationship(back_populates="social_media_contacts")
+    user: "User" = Relationship(back_populates="social_media")
 
 
 # Properties to receive via API on creation

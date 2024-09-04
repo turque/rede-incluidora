@@ -12,4 +12,3 @@ class ProfessionalInsurance(SQLModel, table=True):
     id_professional: int | None = Field(default=None, foreign_key="professional.id")
     id_insurance: int | None = Field(default=None, foreign_key="insurance.id")
     professional: "Professional" = Relationship(back_populates="insurances")
-    insurance: "Insurance" = Relationship(back_populates="professionals")

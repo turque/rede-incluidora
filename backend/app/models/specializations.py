@@ -22,7 +22,7 @@ class Specialization(SpecializationBase, table=True):
     prefessional_id: int | None = Field(
         default=None, foreign_key="professional.id", nullable=False
     )
-    professional: "Professional" = Relationship(back_populates="professional_data")
+    professional: "Professional" = Relationship(back_populates="specializations")
 
 
 # Properties to receive via API on creation
