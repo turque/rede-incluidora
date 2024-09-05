@@ -1,4 +1,11 @@
-from sqlmodel import Field, SQLModel
+from typing import TYPE_CHECKING
+
+from sqlmodel import Field, Relationship, SQLModel
+
+from .professionals import Professional  # noqa: F401
+
+if TYPE_CHECKING:
+    from .professional_insurances import ProfessionalInsurance  # noqa: F401
 
 
 class InsuranceBase(SQLModel):
@@ -7,20 +14,6 @@ class InsuranceBase(SQLModel):
 
 class Insurance(InsuranceBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-
-
-class InsuranceCreate(InsuranceBase):
-    pass
-
-
-class InsuranceUpdate(InsuranceBase):
-    pass
-
-
-class InsurancePublic(InsuranceBase):
-    id: int
-
-
-class InsurancesPublic(SQLModel):
-    data: list[InsurancePublic]
-    count: int
+    professionals: list[Professional] = Relationship(
+        back_populates="insurances", link_model="ProfessionalInsurance"
+    )

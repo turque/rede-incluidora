@@ -1,27 +1,14 @@
-import logging
-from datetime import datetime
+import argparse
 
 from faker import Faker
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
-from app.core.security import get_password_hash
-from app.models import (
-    Address,
-    Insurance,
-    Phone,
-    Professional,
-    ProfessionalInsurance,
-    SocialMedia,
-    Specialization,
-    User,
-)
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# from app.models import User, Professional, Address, Phone, Insurance, Specialization, SocialMedia, ProfessionalInsurance, ProfessionalSpecialization
+from app.models import Address, Phone, SocialMedia, User
 
 # Configuração do banco de dados
-# DATABASE_URL = "sqlite:///./test.db"
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
 # Criar tabelas no banco de dados
@@ -29,42 +16,8 @@ SQLModel.metadata.create_all(engine)
 
 # Inicializar Faker com locale pt_BR
 fake = Faker("pt_BR")
-cidades = [
-    "São Paulo",
-    "Rio de Janeiro",
-    "Belo Horizonte",
-    "Porto Alegre",
-    "Curitiba",
-    "Salvador",
-    "Brasília",
-    "Fortaleza",
-    "Recife",
-    "Manaus",
-]
 
-insurances_list = [
-    "Unimed",
-    "Bradesco Saúde",
-    "Amil",
-    "SulAmérica",
-    "NotreDame Intermédica",
-    "Hapvida",
-    "São Cristóvão Saúde",
-    "Porto Seguro Saúde",
-    "Prevent Senior",
-    "Allianz Saúde",
-    "GreenLine Saúde",
-    "Biovida Saúde",
-    "Golden Cross",
-    "Intermédica",
-    "Mediservice",
-    "One Health",
-    "Samp",
-    "Trasmontano Saúde",
-    "Viva Saúde",
-    "Vitallis Saúde",
-]
-
+# Listas fornecidas para especialidades e planos de saúde
 specializations_list = [
     "Psiquiatria Infantil",
     "Neuropsiquiatria",
@@ -87,137 +40,137 @@ specializations_list = [
     "Psicoterapia Transpessoal",
     "Psicoterapia Interpessoal",
 ]
+insurances_list = ["Amil", "Bradesco Saúde", "SulAmérica", "Unimed", "Porto Seguro"]
 
 
-def create_fake_professional():
+def create_fake_data():
     user = User(
         name=fake.name(),
         email=fake.email(),
         password=fake.password(),
-        hashed_password=get_password_hash(fake.password()),
         is_active=True,
         is_superuser=False,
     )
 
-    professional_data = Professional(
-        self_description=fake.text(),
-        home_service=fake.boolean(),
-        accepts_insurance=fake.boolean(),
-        private_only=fake.boolean(),
-        remote_appointment=fake.boolean(),
-        in_person_appointment=fake.boolean(),
-    )
+    # professional = Professional(
+    #     user=user
+    # )
 
-    address = Address(
-        street=fake.street_name(),
-        number=fake.building_number(),
-        complement=fake.address(),
-        neighborhood=fake.bairro(),
-        city=fake.random_element(elements=cidades),
-        state=fake.estado_sigla(),
-        postal_code=fake.postcode(),
-    )
+    addresses = [
+        Address(
+            street=fake.street_name(),
+            number=fake.building_number(),
+            complement=fake.address(),
+            neighborhood=fake.bairro(),
+            city=fake.city(),
+            state=fake.estado_sigla(),
+            postal_code=fake.postcode(),
+            user=user,
+        )
+        for _ in range(fake.random_int(min=1, max=3))
+    ]
 
-    phone = Phone(
-        phone_number=fake.phone_number(),
-        phone_type=fake.random_element(elements=("fixed", "mobile")),
-        has_whatsapp=fake.boolean(),
-        has_telegram=fake.boolean(),
-        is_primary=fake.boolean(),
-        usage_type=fake.random_element(elements=("personal", "professional")),
-    )
+    phones = [
+        Phone(
+            phone_number=fake.phone_number(),
+            phone_type=fake.random_element(elements=("fixed", "mobile")),
+            has_whatsapp=fake.boolean(),
+            has_telegram=fake.boolean(),
+            is_primary=fake.boolean(),
+            usage_type=fake.random_element(elements=("personal", "professional")),
+            user=user,
+        )
+        for _ in range(fake.random_int(min=1, max=3))
+    ]
 
-    social_media_contact = SocialMedia(
-        platform=fake.random_element(
-            elements=(
-                "Instagram",
-                "Facebook",
-                "TikTok",
-                "LinkedIn",
-                "Twitter",
-                "YouTube",
-                "Snapchat",
-                "Pinterest",
-            )
-        ),
-        username=fake.user_name(),
-        profile_url=fake.url(),
-        is_primary=fake.boolean(),
-        usage_type=fake.random_element(elements=("personal", "professional")),
-    )
+    social_medias = [
+        SocialMedia(
+            platform=fake.random_element(
+                elements=(
+                    "Instagram",
+                    "Facebook",
+                    "TikTok",
+                    "LinkedIn",
+                    "Twitter",
+                    "YouTube",
+                    "Snapchat",
+                    "Pinterest",
+                )
+            ),
+            username=fake.user_name(),
+            profile_url=fake.url(),
+            user=user,
+        )
+        for _ in range(fake.random_int(min=1, max=3))
+    ]
 
-    specialization = Specialization(
-        specialization=fake.random_element(elements=specializations_list),
-        description=fake.text(),
-        certification=fake.word(),
-        institution=fake.company(),
-        year_obtained=datetime.strptime(fake.year(), "%Y"),
-    )
+    # specializations = [
+    #     Specialization(
+    #         specialization=fake.random_element(elements=specializations_list)
+    #     ) for _ in range(fake.random_int(min=1, max=10))
+    # ]
 
-    insurance = Insurance(
-        name=fake.random_element(elements=insurances_list),
-    )
+    # insurances = [
+    #     Insurance(
+    #         name=fake.random_element(elements=insurances_list)
+    #     ) for _ in range(fake.random_int(min=1, max=10))
+    # ]
 
-    return (
-        user,
-        professional_data,
-        address,
-        phone,
-        social_media_contact,
-        specialization,
-        insurance,
-    )
+    return user, addresses, phones, social_medias
+    # return user, professional, addresses, phones, social_medias, specializations, insurances
 
 
-def populate_database():
+def populate_database(num_records: int):
     with Session(engine) as session:
-        for _ in range(30):
-            (
-                user,
-                professional,
-                address,
-                phone,
-                social_media,
-                specialization,
-                insurance,
-            ) = create_fake_professional()
+        for _ in range(num_records):
+            user, addresses, phones, social_medias = create_fake_data()
+            # user, professional, addresses, phones, social_medias, specializations, insurances = create_fake_data()
 
             session.add(user)
             session.commit()
 
-            professional.user_id = user.id
-            session.add(professional)
+            # session.add(professional)
+            # session.commit()
+
+            for address in addresses:
+                address.user_id = user.id
+                session.add(address)
             session.commit()
 
-            address.user_id = user.id
-            session.add(address)
+            for phone in phones:
+                phone.user_id = user.id
+                session.add(phone)
             session.commit()
 
-            phone.user_id = user.id
-            session.add(phone)
+            for social_media in social_medias:
+                social_media.user_id = user.id
+                session.add(social_media)
             session.commit()
 
-            social_media.user_id = user.id
-            session.add(social_media)
-            session.commit()
+            # for specialization in specializations:
+            #     specialization.professional_id = professional.id
+            #     session.add(specialization)
+            # session.commit()
 
-            specialization.professional_id = professional.id
-            session.add(specialization)
-            session.commit()
-
-            session.add(insurance)
-            session.commit()
-
-            professional_insurance = ProfessionalInsurance(
-                professional_id=professional.id, insurance_id=insurance.id
-            )
-            session.add(professional_insurance)
-            session.commit()
-
-        session.commit()
+            # for insurance in insurances:
+            #     session.add(insurance)
+            #     session.commit()
+            #     professional_insurance = ProfessionalInsurance(
+            #         professional_id=professional.id, insurance_id=insurance.id
+            #     )
+            #     session.add(professional_insurance)
+            # session.commit()
 
 
 if __name__ == "__main__":
-    logger.info("Creating fake datas")
-    populate_database()
-    logger.info("Initial fake datas created")
+    parser = argparse.ArgumentParser(
+        description="Populate the database with fake data."
+    )
+    parser.add_argument(
+        "--num-records", type=int, default=10, help="Number of records to create"
+    )
+    args = parser.parse_args()
+
+    print("Creating fake data")
+    populate_database(args.num_records)
+    print("Initial fake data created")

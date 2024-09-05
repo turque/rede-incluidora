@@ -19,25 +19,5 @@ class PhoneBase(SQLModel):
 # Database model, database table inferred from class name
 class Phone(PhoneBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    user_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
+    user_id: int = Field(foreign_key="user.id")
     user: "User" = Relationship(back_populates="phones")
-
-
-# Properties to receive via API on creation
-class PhoneCreate(PhoneBase):
-    pass
-
-
-# Properties to receive via API on update, all are optional
-class PhoneUpdate(PhoneBase):
-    pass
-
-
-# Properties to return via API, id is always required
-class PhonePublic(PhoneBase):
-    id: int
-
-
-class PhonesPublic(SQLModel):
-    data: list[PhonePublic]
-    count: int

@@ -2,6 +2,6 @@ from sqlmodel import SQLModel
 
 
 class Filters(SQLModel):
-    states: list[str]
+    city: list[str]
     insurances: list[str]
     specializations: list[str]

@@ -3,9 +3,9 @@ from typing import TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .professional_insurances import ProfessionalInsurance  # noqa: F401
-    from .specializations import Specialization  # noqa: F401
-    from .users import User  # noqa: F401
+    from .insurances import Insurance  # noqa: F401
+    from .professionals_specializations import Specialization  # noqa: F401
+    from .users import User
 
 
 # Shared properties
@@ -21,30 +21,11 @@ class ProfessionalBase(SQLModel):
 # Database model, database table inferred from class name
 class Professional(ProfessionalBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    user_id: int | None = Field(default=None)
+    user_id: int = Field(foreign_key="user.id", unique=True)
     specializations: list["Specialization"] = Relationship(
-        back_populates="professional"
+        back_populates="professionals", link_model="ProfessionalSpecialization"
     )
-    insurances: list["ProfessionalInsurance"] = Relationship(
-        back_populates="professional"
+    insurances: list["Insurance"] = Relationship(
+        back_populates="professionals", link_model="ProfessionalInsurance"
     )
-
-
-# Properties to receive via API on creation
-class ProfessionalCreate(ProfessionalBase):
-    pass
-
-
-# Properties to receive via API on update, all are optional
-class ProfessionalUpdate(ProfessionalBase):
-    pass
-
-
-# Properties to return via API, id is always required
-class ProfessionalPublic(ProfessionalBase):
-    id: int
-
-
-class ProfessionalsPublic(SQLModel):
-    data: list[ProfessionalPublic]
-    count: int
+    user: "User" = Relationship(back_populates="professional")
