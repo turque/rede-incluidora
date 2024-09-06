@@ -4,9 +4,9 @@ from faker import Faker
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
-
-# from app.models import User, Professional, Address, Phone, Insurance, Specialization, SocialMedia, ProfessionalInsurance, ProfessionalSpecialization
 from app.models import Address, Phone, SocialMedia, User
+
+# from app.models import User, ProfessionalData, Address, Phone, Insurance, Specialization, SocialMedia, UserInsurance, UserSpecialization
 
 # Configuração do banco de dados
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
@@ -155,7 +155,7 @@ def populate_database(num_records: int):
             # for insurance in insurances:
             #     session.add(insurance)
             #     session.commit()
-            #     professional_insurance = ProfessionalInsurance(
+            #     professional_insurance = UserInsurance(
             #         professional_id=professional.id, insurance_id=insurance.id
             #     )
             #     session.add(professional_insurance)
