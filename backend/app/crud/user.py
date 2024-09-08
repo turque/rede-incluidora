@@ -1,19 +1,7 @@
 from sqlmodel import Session, select
 
 from app.core.security import verify_password
-from app.models import User, UserPublicAll
-
-
-def get_users(*, session: Session) -> UserPublicAll:
-    statement = select(User)
-    users = session.exec(statement).all()
-    return users
-
-
-def get_user_by_id(user_id: int, session: Session) -> UserPublicAll | None:
-    statement = select(User).where(User.id == user_id)
-    user = session.exec(statement).one_or_none()
-    return user
+from app.models import User
 
 
 def get_user_by_email(*, session: Session, email: str) -> User | None:

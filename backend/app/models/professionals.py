@@ -1,16 +1,12 @@
-from typing import TYPE_CHECKING
-
 from sqlmodel import Field, Relationship, SQLModel
 
+from .insurances import Insurance  # noqa: F401
 from .professionals_addresses import Address
 from .professionals_insurances_link import ProfessionalInsurance
 from .professionals_phones import Phone
 from .professionals_social_media import SocialMedia
 from .professionals_specializations_link import ProfessionalSpecialization
-
-if TYPE_CHECKING:
-    from .insurances import Insurance  # noqa: F401
-    from .specializations import Specialization  # noqa: F401
+from .specializations import Specialization  # noqa: F401
 
 
 # Shared properties
@@ -42,9 +38,9 @@ class ProfessionalPublic(ProfessionalBase):
     id: int
 
 
-class ProfessionalCompleteDataPublic(ProfessionalPublic):
-    addresses: list["Address"] | None
-    phones: list["Phone"] | None
-    social_medias: list["SocialMedia"] | None
-    specialization: list["ProfessionalSpecialization"] | None
-    insurances: list["ProfessionalInsurance"] | None
+class ProfessionalDataPublic(ProfessionalPublic):
+    addresses: list[Address] | None
+    phones: list[Phone] | None
+    social_medias: list[SocialMedia] | None
+    specializations: list[Specialization] | None
+    insurances: list[Insurance] | None

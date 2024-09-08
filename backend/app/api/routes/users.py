@@ -4,7 +4,7 @@ from fastapi import APIRouter
 
 from app.api.deps import SessionDep
 from app.crud import user
-from app.models import UserPublicAll
+from app.models import UserPublic
 
 router = APIRouter()
 
@@ -12,7 +12,7 @@ router = APIRouter()
 # TODO remover
 @router.get(
     "/",
-    response_model=list[UserPublicAll],
+    response_model=list[UserPublic],
 )
 def read_users(session: SessionDep) -> Any:
     """
@@ -21,8 +21,8 @@ def read_users(session: SessionDep) -> Any:
     return user.get_users(session=session)
 
 
-@router.get("/{user_id}", response_model=UserPublicAll)
-def read_user_by_id(user_id: int, session: SessionDep) -> UserPublicAll | None:
+@router.get("/{user_id}", response_model=UserPublic)
+def read_user_by_id(user_id: int, session: SessionDep) -> UserPublic | None:
     """
     Get a specific user by id.
     """
