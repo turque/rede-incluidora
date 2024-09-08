@@ -5,6 +5,7 @@ from typing import Annotated, Any, Literal
 from pydantic import (
     AnyUrl,
     BeforeValidator,
+    EmailStr,
     HttpUrl,
     PostgresDsn,
     computed_field,
@@ -48,11 +49,11 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SENTRY_DSN: HttpUrl | None = None
-    POSTGRES_SERVER: str
+    POSTGRES_SERVER: str = "localhost"
     POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str = ""
+    POSTGRES_USER: str = "postgres"
+    POSTGRES_PASSWORD: str = "changethis"
+    POSTGRES_DB: str = "app"
 
     @computed_field  # type: ignore[misc]
     @property
@@ -66,14 +67,14 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DB,
         )
 
+    # SQLALCHEMY_DATABASE_URI: str = ""
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
     SMTP_PORT: int = 587
     SMTP_HOST: str | None = None
     SMTP_USER: str | None = None
     SMTP_PASSWORD: str | None = None
-    # TODO: update type to EmailStr when sqlmodel supports it
-    EMAILS_FROM_EMAIL: str | None = None
+    EMAILS_FROM_EMAIL: EmailStr | None = None
     EMAILS_FROM_NAME: str | None = None
 
     @model_validator(mode="after")
@@ -89,9 +90,7 @@ class Settings(BaseSettings):
     def emails_enabled(self) -> bool:
         return bool(self.SMTP_HOST and self.EMAILS_FROM_EMAIL)
 
-    # TODO: update type to EmailStr when sqlmodel supports it
-    EMAIL_TEST_USER: str = "test@example.com"
-    # TODO: update type to EmailStr when sqlmodel supports it
+    EMAIL_TEST_USER: EmailStr = "test@example.com"
     FIRST_SUPERUSER: str
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
