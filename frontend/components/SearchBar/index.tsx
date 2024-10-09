@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
+
 import { Box, Flex, FormControl, FormLabel, Input, Button, Heading } from '@chakra-ui/react';
 import MultiSelectComponent from '../MultiSelectComponent';
 import AutocompleteSelect from '../AutocompleteSelect';
 
 const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const router = useRouter();
   const [filterType, setFilterType] = useState('especialidade');
   const [insurance, setInsurance] = useState([]);
   const [city, setCity] = useState('');
@@ -30,23 +33,32 @@ const SearchBar = () => {
   []);
 
 
-  const handleSearch = async () => {
-    try {
-      const params = new URLSearchParams({
-        specialization: searchQuery,
-        city: city,
-        insurance: insurance.map(i => i.value).join(','),
-      });
-
-      const response = await axios.get(`/api/search?${params.toString()}`);
-
-      console.log('Search results:', response.data);
-      // Redirecionar para a página /pesquisa
-      // router.push('/pesquisa');
-    } catch (error) {
-      console.error('Error during search:', error);
-    }
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    const response = await axios.post('/api/search', { query });
+    router.push({
+      pathname: '/pesquisa',
+      query: { results: JSON.stringify(response.data) },
+    });
   };
+
+  // const handleSearch = async () => {
+  //   try {
+  //     const params = new URLSearchParams({
+  //       specialization: searchQuery,
+  //       city: city,
+  //       insurance: insurance.map(i => i.value).join(','),
+  //     });
+
+  //     const response = await axios.get(`/api/search?${params.toString()}`);
+
+  //     console.log('Search results:', response.data);
+  //     // Redirecionar para a página /pesquisa
+  //     // router.push('/pesquisa');
+  //   } catch (error) {
+  //     console.error('Error during search:', error);
+  //   }
+  // };
 
   return (
     <Box bg="white" p={6} borderRadius="md" boxShadow="md" mb={8} className="bg-white p-6 rounded-md shadow-md mb-8">
@@ -56,8 +68,8 @@ const SearchBar = () => {
             <FormLabel>Pesquisar</FormLabel>
             <Input
               placeholder="Digite especialidade ou doença"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
           </FormControl>
 
