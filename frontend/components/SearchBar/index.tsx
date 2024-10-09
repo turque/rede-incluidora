@@ -1,76 +1,89 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import {
-  Box,
-  Input,
-  Select,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-} from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Box, Flex, FormControl, FormLabel, Input, Button, Heading } from '@chakra-ui/react';
+import MultiSelectComponent from '../MultiSelectComponent';
+import AutocompleteSelect from '../AutocompleteSelect';
 
-export default function SearchBar() {
+const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('especialidade');
-  const [region, setRegion] = useState('');
+  const [insurance, setInsurance] = useState([]);
+  const [city, setCity] = useState('');
+  const [insuranceList, setInsuranceList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [specializationList, setSpecializationList] = useState([]);
 
-  const handleSearch = () => {
-    // Lógica para fazer a pesquisa
-    console.log({ searchQuery, filterType, region });
+  useEffect(() => {
+    // Fetch filters from backend
+    axios.get('/api/filters')
+      .then(response => {
+        setInsuranceList(response.data.insurances);
+        setCityList(response.data.city);
+        setSpecializationList(response.data.specializations);
+      })
+      .catch(error => {
+        console.error('Error fetching filters:', error);
+      });
+  },
+  []);
+
+
+  const handleSearch = async () => {
+    try {
+      const params = new URLSearchParams({
+        specialization: searchQuery,
+        city: city,
+        insurance: insurance.map(i => i.value).join(','),
+      });
+
+      const response = await axios.get(`/api/search?${params.toString()}`);
+
+      console.log('Search results:', response.data);
+      // Redirecionar para a página /pesquisa
+      // router.push('/pesquisa');
+    } catch (error) {
+      console.error('Error during search:', error);
+    }
   };
 
   return (
-    <Box bg="white" p={6} borderRadius="md" boxShadow="md" mb={8}>
-      <Flex
-        direction={{ base: 'column', md: 'row' }}
-        alignItems="center"
-        gap={4}
-      >
-        <FormControl flex="2">
-          <FormLabel>Pesquisar</FormLabel>
-          <Input
-            placeholder="Digite o nome do profissional, especialidade ou doença"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl flex="1">
-          <FormLabel>Filtrar por</FormLabel>
-          <Select
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-          >
-            <option value="especialidade">Especialidade</option>
-            <option value="doenca">Doença</option>
-            <option value="regiao">Região</option>
-          </Select>
-        </FormControl>
-
-        {filterType === 'regiao' && (
-          <FormControl flex="1">
-            <FormLabel>Região</FormLabel>
+    <Box bg="white" p={6} borderRadius="md" boxShadow="md" mb={8} className="bg-white p-6 rounded-md shadow-md mb-8">
+      <Flex direction="column" gap={4}>
+        <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+          <FormControl flex="2">
+            <FormLabel>Pesquisar</FormLabel>
             <Input
-              placeholder="Digite a região"
-              value={region}
-              onChange={(e) => setRegion(e.target.value)}
+              placeholder="Digite especialidade ou doença"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </FormControl>
-        )}
 
-        <Button
-          mt={{ base: 4, md: 8 }}
-          ml={{ md: 4 }}
-          colorScheme="orange"
-          height="48px"  // Alinha com a altura do input
-          onClick={handleSearch}
-          width={{ base: '100%', md: 'auto' }}
-        >
-          Buscar
-        </Button>
+          <Button onClick={handleSearch} colorScheme="orange" alignSelf={{ base: 'stretch', md: 'flex-end' }}>
+            Pesquisar
+          </Button>
+        </Flex>
+
+        <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+          <MultiSelectComponent
+                value={insurance}
+                setValue={setInsurance}
+                options={insuranceList.map(plan => ({ label: plan, value: plan }))}
+                label="Plano de Saúde"
+              />
+            <AutocompleteSelect
+                value={city}
+                setValue={setCity}
+                options={cityList}
+                label="Cidade"
+                placeholder="Digite a cidade"
+              />
+        </Flex>
       </Flex>
     </Box>
   );
-}
+};
+
+export default SearchBar;
