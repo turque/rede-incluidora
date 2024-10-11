@@ -48,6 +48,28 @@ specializations_list = [
     "Psicoterapia Interpessoal",
 ]
 insurances_list = ["Amil", "Bradesco Saúde", "SulAmérica", "Unimed", "Porto Seguro"]
+cities_list = [
+    "São Paulo",
+    "Rio de Janeiro",
+    "Belo Horizonte",
+    "Brasília",
+    "Salvador",
+    "Fortaleza",
+    "Curitiba",
+    "Manaus",
+    "Recife",
+    "Porto Alegre",
+    "Belém",
+    "Goiânia",
+    "Guarulhos",
+    "Campinas",
+    "São Luís",
+    "São Gonçalo",
+    "Maceió",
+    "Duque de Caxias",
+    "Natal",
+    "Teresina",
+]
 
 
 def load_insurances_and_specializations():
@@ -90,7 +112,7 @@ def create_fake_data():
             number=fake.building_number(),
             complement=fake.address(),
             neighborhood=fake.bairro(),
-            city=fake.city(),
+            city=fake.random_element(elements=cities_list),
             state=fake.estado_sigla(),
             postal_code=fake.postcode(),
             professional=professional,

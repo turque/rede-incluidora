@@ -1,37 +1,79 @@
-'use client'
-import { Box, Image, Text, VStack, HStack, Icon, Divider, Link } from '@chakra-ui/react';
+import { Box, Image, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar } from '@chakra-ui/react';
 import { StarIcon, PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FC } from 'react';
 
 interface Address {
   street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
   city: string;
   state: string;
+  postal_code: string;
+  id: number;
+  professional_id: number;
 }
 
-interface ContactInfo {
-  phone: string;
-  email: string;
-  whatsapp: string;
+interface Phone {
+  phone_number: string;
+  phone_type: string;
+  has_whatsapp: boolean;
+  has_telegram: boolean;
+  is_primary: boolean;
+  usage_type: string;
+  id: number;
+  professional_id: number;
+}
+
+interface SocialMedia {
+  platform: string;
+  username: string;
+  profile_url: string;
+  id: number;
+  professional_id: number;
+}
+
+interface Specialization {
+  name: string;
+  id: number;
+}
+
+interface Insurance {
+  name: string;
+  id: number;
 }
 
 interface HealthProfessionalCardProps {
   name: string;
-  specialty: string;
-  rating: number;
-  imageUrl: string;
+  treatment: string;
+  selfDescription: string;
+  avatarUrl?: string;
+  homeCare: boolean;
+  acceptsInsurance: boolean;
+  remoteAppointment: boolean;
+  inPersonAppointment: boolean;
   addresses: Address[];
-  contactInfo: ContactInfo;
+  phones: Phone[];
+  socialMedias: SocialMedia[];
+  specializations: Specialization[];
+  insurances: Insurance[];
 }
 
 const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
   name,
-  specialty,
-  rating,
-  imageUrl,
+  treatment,
+  selfDescription,
+  homeCare,
+  acceptsInsurance,
+  remoteAppointment,
+  inPersonAppointment,
   addresses,
-  contactInfo,
+  phones,
+  socialMedias,
+  specializations,
+  insurances,
+  rating = 4,
 }) => {
   return (
     <Box
@@ -52,7 +94,7 @@ const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
             {name}
           </Text>
           <Text fontSize="lg" color="gray.500">
-            {specialty}
+            {specializations.map(specialization => specialization.name).join(', ')}
           </Text>
           <HStack spacing={1}>
             {Array(5)
@@ -61,39 +103,47 @@ const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
                 <Icon
                   as={StarIcon}
                   key={i}
-                  color={i < rating ? 'yellow.400' : 'gray.300'}
+                  color={i < rating ? 'orange.400' : 'gray.300'}
                 />
               ))}
           </HStack>
         </VStack>
-        <Image
-          borderRadius="full"
-          boxSize="120px"
-          src={imageUrl}
-          alt={`Foto de ${name}`}
+        {/* TODO! Levar a url do avatar para o backend */}
+        <Avatar
+          size="xl"
+          name={name}
+          src={`https://i.pravatar.cc/150?img=${addresses[0].professional_id}`}
         />
       </HStack>
+      <HStack>
+        {homeCare && <Badge colorScheme="green">Atende em Domicilio</Badge>}
+        {acceptsInsurance && <Badge colorScheme="blue">Aceita Plano</Badge>}
+        {remoteAppointment && <Badge colorScheme="purple">Atende Remoto</Badge>}
+        {inPersonAppointment && <Badge colorScheme="orange">Atende Presencial</Badge>}
+      </HStack>
       <Divider marginY={4} />
-      
+
       {/* Dados de Contato */}
       <VStack spacing={2} align="start" flex="1">
         <Text fontWeight="bold">Contato:</Text>
         <HStack spacing={3}>
           <PhoneIcon />
-          <Text>{contactInfo.phone}</Text>
+          <Text>
+            {phones.map(phone => phone.phone_number).join(', ')}
+          </Text>
         </HStack>
         <HStack spacing={3}>
           <EmailIcon />
-          <Text>{contactInfo.email}</Text>
+          <Text>contato@mail.com</Text>
         </HStack>
         <HStack spacing={3}>
           <Icon as={FaWhatsapp} />
-          <Link href={`https://wa.me/${contactInfo.whatsapp}`} color="teal.500" isExternal>
+          <Link href={`https://wa.me/${phones[0].phone_number}`} color="teal.500" isExternal>
             WhatsApp
           </Link>
         </HStack>
       </VStack>
-      
+
       <Divider marginY={4} />
 
       {/* Endereços */}
