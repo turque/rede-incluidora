@@ -94,6 +94,7 @@ def load_insurances_and_specializations():
 
 
 def create_fake_data():
+    img_id = fake.random_int(min=1, max=75)
     professional = Professional(
         name=fake.name(),
         treatment=fake.random_element(
@@ -104,6 +105,11 @@ def create_fake_data():
         accepts_insurance=fake.boolean(),
         remote_appointment=fake.boolean(),
         in_person_appointment=fake.boolean(),
+        avatar_url=f"https://i.pravatar.cc/150?img={img_id}",
+        email=fake.email(),
+        verified=fake.boolean(),
+        active=fake.boolean(),
+        created_at=fake.date_time_this_month(),
     )
 
     addresses = [
@@ -232,7 +238,7 @@ if __name__ == "__main__":
         description="Populate the database with fake data."
     )
     parser.add_argument(
-        "--num-records", type=int, default=10, help="Number of records to create"
+        "--num-records", type=int, default=20, help="Number of records to create"
     )
     args = parser.parse_args()
 

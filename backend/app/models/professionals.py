@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
 from .insurances import Insurance  # noqa: F401
@@ -18,6 +21,11 @@ class ProfessionalBase(SQLModel):
     accepts_insurance: bool = False
     remote_appointment: bool = False
     in_person_appointment: bool = False
+    avatar_url: str | None = Field(default=None)
+    email: EmailStr | None = Field(default=None)
+    verified: bool = False
+    active: bool = False
+    created_at: datetime | None = Field(default=None)
 
 
 # Database model, database table inferred from class name
