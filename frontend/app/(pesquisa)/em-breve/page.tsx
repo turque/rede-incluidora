@@ -12,7 +12,7 @@ export default function Soon() {
         textAlign="center"
       >
         <Heading as="h1" size="2xl" mb={4} color="brand.500">
-          Em Desenvolvimento 🚧
+          Em Breve 🚧
         </Heading>
         <Text fontSize="lg" mb={6}>
           Estamos trabalhando duro para trazer esta funcionalidade e muitas
