@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Box, VStack } from '@chakra-ui/react';
 import HealthProfessionalCard from '@/components/HealthProfessionalCard/HealthProfessionalCard';
-import { HealthProfessional } from '@/interfaces/HealthProfessional';
+import { HealthProfessional } from '@/types/HealthProfessional';
 
 
 const PesquisaPage: FC = () => {

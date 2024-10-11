@@ -42,18 +42,18 @@ interface Insurance {
 export interface HealthProfessional {
   name: string;
   treatment: string;
-  selfDescription: string;
-  avatarUrl: string;
+  self_description: string;
+  avatar_url: string;
   email: string;
-  homeCare: boolean;
-  acceptsInsurance: boolean;
-  remoteAppointment: boolean;
-  inPersonAppointment: boolean;
+  home_care: boolean;
+  accepts_insurance: boolean;
+  remote_appointment: boolean;
+  in_person_appointment: boolean;
   verified: boolean;
-  createdAt: Date;
+  created_at: Date;
   addresses: Address[];
   phones: Phone[];
-  socialMedias: SocialMedia[];
+  social_medias: SocialMedia[];
   specializations: Specialization[];
   insurances: Insurance[];
 }

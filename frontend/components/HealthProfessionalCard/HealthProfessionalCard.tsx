@@ -2,7 +2,7 @@ import { Box, Image, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar } 
 import { StarIcon, PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FC } from 'react';
-import { HealthProfessional } from '@/interfaces/HealthProfessional';
+import { HealthProfessional } from '@/types/HealthProfessional';
 
 const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessional) => {
   return (
@@ -38,18 +38,17 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
               ))}
           </HStack> */}
         </VStack>
-        {/* TODO! Levar a url do avatar para o backend */}
         <Avatar
           size="xl"
           name={props.name}
-          src={`https://i.pravatar.cc/150?img=${props.addresses[0].professional_id}`}
+          src={props.avatar_url}
         />
       </HStack>
       <HStack>
-        {props.homeCare && <Badge colorScheme="green">Atende em Domicilio</Badge>}
-        {props.acceptsInsurance && <Badge colorScheme="blue">Aceita Plano</Badge>}
-        {props.remoteAppointment && <Badge colorScheme="purple">Atende Remoto</Badge>}
-        {props.inPersonAppointment && <Badge colorScheme="orange">Atende Presencial</Badge>}
+        {props.home_care && <Badge colorScheme="green">Atende em Domicilio</Badge>}
+        {props.accepts_insurance && <Badge colorScheme="blue">Aceita Plano</Badge>}
+        {props.remote_appointment && <Badge colorScheme="purple">Atende Remoto</Badge>}
+        {props.in_person_appointment && <Badge colorScheme="orange">Atende Presencial</Badge>}
       </HStack>
       <Divider marginY={4} />
 
@@ -64,7 +63,7 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
         </HStack>
         <HStack spacing={3}>
           <EmailIcon />
-          <Text>contato@mail.com</Text>
+          <Text>{props.email}</Text>
         </HStack>
         <HStack spacing={3}>
           <Icon as={FaWhatsapp} />
