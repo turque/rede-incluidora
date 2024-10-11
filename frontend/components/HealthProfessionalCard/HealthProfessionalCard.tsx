@@ -2,79 +2,9 @@ import { Box, Image, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar } 
 import { StarIcon, PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FC } from 'react';
+import { HealthProfessional } from '@/interfaces/HealthProfessional';
 
-interface Address {
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  postal_code: string;
-  id: number;
-  professional_id: number;
-}
-
-interface Phone {
-  phone_number: string;
-  phone_type: string;
-  has_whatsapp: boolean;
-  has_telegram: boolean;
-  is_primary: boolean;
-  usage_type: string;
-  id: number;
-  professional_id: number;
-}
-
-interface SocialMedia {
-  platform: string;
-  username: string;
-  profile_url: string;
-  id: number;
-  professional_id: number;
-}
-
-interface Specialization {
-  name: string;
-  id: number;
-}
-
-interface Insurance {
-  name: string;
-  id: number;
-}
-
-interface HealthProfessionalCardProps {
-  name: string;
-  treatment: string;
-  selfDescription: string;
-  avatarUrl?: string;
-  homeCare: boolean;
-  acceptsInsurance: boolean;
-  remoteAppointment: boolean;
-  inPersonAppointment: boolean;
-  addresses: Address[];
-  phones: Phone[];
-  socialMedias: SocialMedia[];
-  specializations: Specialization[];
-  insurances: Insurance[];
-}
-
-const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
-  name,
-  treatment,
-  selfDescription,
-  homeCare,
-  acceptsInsurance,
-  remoteAppointment,
-  inPersonAppointment,
-  addresses,
-  phones,
-  socialMedias,
-  specializations,
-  insurances,
-  rating = 4,
-}) => {
+const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessional) => {
   return (
     <Box
       width="100%"
@@ -91,35 +21,35 @@ const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
       <HStack spacing={4} alignItems="center" flex="1">
         <VStack align="start" flex="1">
           <Text fontWeight="bold" fontSize="2xl">
-            {name}
+            {props.name}
           </Text>
           <Text fontSize="lg" color="gray.500">
-            {specializations.map(specialization => specialization.name).join(', ')}
+            {props.specializations.map(specialization => specialization.name).join(', ')}
           </Text>
-          <HStack spacing={1}>
+          {/* <HStack spacing={1}>
             {Array(5)
               .fill('')
               .map((_, i) => (
                 <Icon
                   as={StarIcon}
                   key={i}
-                  color={i < rating ? 'orange.400' : 'gray.300'}
+                  color={i < props.rating ? 'orange.400' : 'gray.300'}
                 />
               ))}
-          </HStack>
+          </HStack> */}
         </VStack>
         {/* TODO! Levar a url do avatar para o backend */}
         <Avatar
           size="xl"
-          name={name}
-          src={`https://i.pravatar.cc/150?img=${addresses[0].professional_id}`}
+          name={props.name}
+          src={`https://i.pravatar.cc/150?img=${props.addresses[0].professional_id}`}
         />
       </HStack>
       <HStack>
-        {homeCare && <Badge colorScheme="green">Atende em Domicilio</Badge>}
-        {acceptsInsurance && <Badge colorScheme="blue">Aceita Plano</Badge>}
-        {remoteAppointment && <Badge colorScheme="purple">Atende Remoto</Badge>}
-        {inPersonAppointment && <Badge colorScheme="orange">Atende Presencial</Badge>}
+        {props.homeCare && <Badge colorScheme="green">Atende em Domicilio</Badge>}
+        {props.acceptsInsurance && <Badge colorScheme="blue">Aceita Plano</Badge>}
+        {props.remoteAppointment && <Badge colorScheme="purple">Atende Remoto</Badge>}
+        {props.inPersonAppointment && <Badge colorScheme="orange">Atende Presencial</Badge>}
       </HStack>
       <Divider marginY={4} />
 
@@ -129,7 +59,7 @@ const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
         <HStack spacing={3}>
           <PhoneIcon />
           <Text>
-            {phones.map(phone => phone.phone_number).join(', ')}
+            {props.phones.map(phone => phone.phone_number).join(', ')}
           </Text>
         </HStack>
         <HStack spacing={3}>
@@ -138,7 +68,7 @@ const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
         </HStack>
         <HStack spacing={3}>
           <Icon as={FaWhatsapp} />
-          <Link href={`https://wa.me/${phones[0].phone_number}`} color="teal.500" isExternal>
+          <Link href={`https://wa.me/${props.phones[0].phone_number}`} color="teal.500" isExternal>
             WhatsApp
           </Link>
         </HStack>
@@ -149,7 +79,7 @@ const HealthProfessionalCard: FC<HealthProfessionalCardProps> = ({
       {/* Endereços */}
       <VStack spacing={2} align="start" flex="1">
         <Text fontWeight="bold">Endereços:</Text>
-        {addresses.map((address, index) => (
+        {props.addresses.map((address, index) => (
           <Box key={index} p={2} w="full" bg="gray.50" borderRadius="md" className="shadow-sm">
             <Text>{address.street}</Text>
             <Text>{`${address.city}, ${address.state}`}</Text>
