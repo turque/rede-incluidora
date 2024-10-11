@@ -46,7 +46,7 @@
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "eslint": "^9.9.1",
-    "eslint-config-next": "14.2.7",
+    "eslint-config-next": "^14.2.15",
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8.4.41",
     "storybook": "^8.2.9",
