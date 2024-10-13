@@ -45,7 +45,6 @@ def get_filters(filters: list[dict] | None) -> list:
                 )
                 conditions.append(ProfessionalInsurance.insurance_id == Insurance.id)
                 conditions.append(Insurance.name == filter_item["value"])
-    print("conditions", conditions)
     return conditions
 
 
@@ -69,14 +68,12 @@ def get_professionals(
     """
     conditions = get_filters(filters)
 
-    # .where(Address.professional_id == Professional.id).where(Address.city == "Guarulhos")
-    statement = select(Professional).distinct()
+    statement = select(Professional).distinct().where(Professional.active)
     if conditions:
         for condition in conditions:
             statement = statement.where(condition)
 
     professionals = session.exec(statement).all()
-    print("professionals", professionals)
     return [
         ProfessionalDataPublic.model_validate(professional)
         for professional in professionals
