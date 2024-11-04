@@ -16,7 +16,7 @@ const Resultado = async ({ searchParams }) => {
         {results.length > 0 ? (
           results.map((result, index) => (
             <Box key={index} p={4} borderWidth={1} borderRadius="lg">
-              <HealthProfessionalCard data={result} />
+              <HealthProfessionalCard {...result} />
             </Box>
           ))
         ) : (

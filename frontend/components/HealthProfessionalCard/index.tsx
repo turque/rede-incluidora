@@ -12,7 +12,7 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
 
   return (
     <Box
-      width="100%"
+      width="80vw" // Alterado para 80% da largura da tela
       height="100%"
       borderWidth="1px"
       borderRadius="lg"
