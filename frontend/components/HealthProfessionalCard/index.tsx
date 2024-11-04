@@ -6,13 +6,9 @@ import { FC, useEffect } from 'react';
 import { HealthProfessional } from '@/types/HealthProfessional';
 
 const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessional) => {
-  useEffect(() => {
-    console.log('HealthProfessionalCard props:', props);
-  }, [props]);
-
   return (
     <Box
-      width="80vw" // Alterado para 80% da largura da tela
+      width="80vw"
       height="100%"
       borderWidth="1px"
       borderRadius="lg"

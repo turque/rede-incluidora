@@ -8,7 +8,6 @@ const Resultado = async ({ searchParams }) => {
 
   const response = await fetch(`${apiUrl}/api/v1/search?${queryString}`);
   const results = await response.json();
-  console.log(results);
 
   return (
     <Box className="min-h-screen py-1 flex justify-center" w="75%">
