@@ -16,7 +16,7 @@ const MultiSelectComponent = ({ value, setValue, options, label }: MultiSelectCo
 	  <MultiSelect
 		options={options}
 		value={value}
-		onChange={(selected) => setValue(selected.length > 1 ? [selected[selected.length - 1]] : selected)}
+		onChange={(selected: any[]) => setValue(selected.length > 1 ? [selected[selected.length - 1]] : selected)}
 		labelledBy={`Selecione ${label.toLowerCase()}`}
 		hasSelectAll={false}
 		overrideStrings={{

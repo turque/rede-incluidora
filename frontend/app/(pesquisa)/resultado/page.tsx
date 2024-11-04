@@ -1,8 +1,9 @@
 import { Box, VStack, Text } from '@chakra-ui/react';
 import HealthProfessionalCard from '@/components/HealthProfessionalCard';
+import { HealthProfessional } from '@/types/HealthProfessional';
 
 
-const Resultado = async ({ searchParams }) => {
+const Resultado = async ({ searchParams }: { searchParams: Record<string, string> }) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const queryString = new URLSearchParams(searchParams).toString();
 
@@ -13,7 +14,7 @@ const Resultado = async ({ searchParams }) => {
     <Box className="min-h-screen py-1 flex justify-center" w="75%">
       <VStack spacing={2}>
         {results.length > 0 ? (
-          results.map((result, index) => (
+          results.map((result: HealthProfessional, index: number) => (
             <Box key={index} p={4} borderWidth={1} borderRadius="lg">
               <HealthProfessionalCard {...result} />
             </Box>

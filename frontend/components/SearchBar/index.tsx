@@ -16,26 +16,26 @@ const SearchBar = () => {
   useEffect(() => {
     // Fetch filters from backend
     axios.get('/api/filters')
-      .then(response => {
+      .then((response: { data: { city: string[], specializations: string[] } }) => {
         setCityList(response.data.city);
         setSpecializationList(response.data.specializations);
       })
-      .catch(error => {
+      .catch((error: any) => {
         console.error('Error fetching filters:', error);
       });
   }, []);
 
-  const loadCityOptions = (inputValue, callback) => {
+  const loadCityOptions = (inputValue: string, callback: (options: { label: string, value: string }[]) => void) => {
     const filteredOptions = cityList
-      .filter(city => city.toLowerCase().includes(inputValue.toLowerCase()))
-      .map(city => ({ label: city, value: city }));
+      .filter((city: string) => city.toLowerCase().includes(inputValue.toLowerCase()))
+      .map((city: string) => ({ label: city, value: city }));
     callback(filteredOptions);
   };
 
-  const loadSpecializationOptions = (inputValue, callback) => {
+  const loadSpecializationOptions = (inputValue: string, callback: (options: { label: string, value: string }[]) => void) => {
     const filteredOptions = specializationList
-      .filter(spec => spec.toLowerCase().includes(inputValue.toLowerCase()))
-      .map(spec => ({ label: spec, value: spec }));
+      .filter((spec: string) => spec.toLowerCase().includes(inputValue.toLowerCase()))
+      .map((spec: string) => ({ label: spec, value: spec }));
     callback(filteredOptions);
   };
 
@@ -60,7 +60,7 @@ const SearchBar = () => {
             value={specialization}
             setValue={setSpecialization}
             loadOptions={loadSpecializationOptions}
-            defaultOptions={specializationList.map(spec => ({ label: spec, value: spec }))}
+            defaultOptions={specializationList.map((spec: string) => ({ label: spec, value: spec }))}
             // label="Pesquisar"
             placeholder="Especialidade"
           />
@@ -68,7 +68,7 @@ const SearchBar = () => {
             value={city}
             setValue={setCity}
             loadOptions={loadCityOptions}
-            defaultOptions={cityList.map(city => ({ label: city, value: city }))}
+            defaultOptions={cityList.map((city: string) => ({ label: city, value: city }))}
             // label="Cidade"
             placeholder="Cidade"
           />

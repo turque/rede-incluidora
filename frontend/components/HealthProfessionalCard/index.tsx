@@ -1,8 +1,8 @@
 'use client';
-import { Box, Image, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Tooltip } from '@chakra-ui/react';
-import { StarIcon, PhoneIcon, EmailIcon, CheckIcon } from '@chakra-ui/icons';
+import { Box, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar, Tabs, TabList, TabPanels, Tab, TabPanel, Tooltip } from '@chakra-ui/react';
+import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { FaWhatsapp, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaSnapchat, FaCheckCircle } from 'react-icons/fa';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { HealthProfessional } from '@/types/HealthProfessional';
 
 const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessional) => {
@@ -25,9 +25,9 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
             {props.name || 'Nome não disponível'}
             {props.verified && (
               <Tooltip label="Este profissional foi verificado" aria-label="Verificado">
-                <span>
+                <React.Fragment>
                   <Icon as={FaCheckCircle} color="green.500" ml={2} boxSize={3} />
-                </span>
+                </React.Fragment>
               </Tooltip>
             )}
           </Text>
