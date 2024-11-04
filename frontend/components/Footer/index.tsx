@@ -1,5 +1,5 @@
 import { Box, Container, SimpleGrid, Stack, Text, Link, IconButton, Flex, Divider } from '@chakra-ui/react';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -11,9 +11,20 @@ export default function Footer() {
             <Text fontWeight="bold" fontSize="md" mb={2}>
               Contato
             </Text>
-            <Text>Telefone: (11) 1234-5678</Text>
+            <Flex alignItems="center">
+              <Text>Telefone: (61) 99883-1214</Text>
+                <Link href="https://api.whatsapp.com/send?phone=5561998831214&text=Ol%C3%A1,%20encontrei%20seu%20n%C3%BAmero%20na%20sess%C3%A3o%20de%20contato%20da%20p%C3%A1gina%20Rede%20Incluidora.%20Eu%20sou%20...%20e%20quero%20conversar%20com%20voc%C3%AA%20sobre%20o%20assunto...%20(Escreva%20seu%20nome%20e%20o%20assunto%20que%20quer%20tratar)" isExternal ml={2}>
+                <IconButton
+                  aria-label="WhatsApp"
+                  icon={<FaWhatsapp />}
+                  bg="transparent"
+                  color="green.500"
+                  _hover={{ bg: 'orange.400' }}
+                />
+                </Link>
+            </Flex>
             <Text>Email: contato@saude.com.br</Text>
-            <Text>Endereço: Rua Saúde, 123 - São Paulo, SP</Text>
+            {/* <Text>Endereço: Rua Saúde, 123 - São Paulo, SP</Text> */}
           </Stack>
 
           {/* Seção de Links Rápidos */}
@@ -33,7 +44,7 @@ export default function Footer() {
               Siga-nos
             </Text>
             <Flex>
-              <Link href="https://www.facebook.com" isExternal>
+              <Link href="https://www.facebook.com/redeincluidora" isExternal>
                 <IconButton
                   aria-label="Facebook"
                   icon={<FaFacebook />}
@@ -42,7 +53,7 @@ export default function Footer() {
                   _hover={{ bg: 'orange.400' }}
                 />
               </Link>
-              <Link href="https://www.twitter.com" isExternal ml={4}>
+              {/* <Link href="https://www.twitter.com" isExternal ml={4}>
                 <IconButton
                   aria-label="Twitter"
                   icon={<FaTwitter />}
@@ -50,8 +61,8 @@ export default function Footer() {
                   color={'blue.400'}
                   _hover={{ bg: 'orange.400' }}
                 />
-              </Link>
-              <Link href="https://www.instagram.com" isExternal ml={4}>
+              </Link> */}
+              <Link href="https://www.instagram.com/circulodeincluidoras" isExternal ml={4}>
                 <IconButton
                   aria-label="Instagram"
                   icon={<FaInstagram />}
@@ -60,7 +71,7 @@ export default function Footer() {
                   _hover={{ bg: 'orange.400' }}
                 />
               </Link>
-              <Link href="https://www.linkedin.com" isExternal ml={4}>
+              {/* <Link href="https://www.linkedin.com" isExternal ml={4}>
                 <IconButton
                   aria-label="LinkedIn"
                   icon={<FaLinkedin />}
@@ -68,7 +79,7 @@ export default function Footer() {
                   color={'blue.600'}
                   _hover={{ bg: 'orange.400' }}
                 />
-              </Link>
+              </Link> */}
             </Flex>
           </Stack>
         </SimpleGrid>
