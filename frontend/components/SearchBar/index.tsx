@@ -6,12 +6,17 @@ import { Box, Flex, Button } from '@chakra-ui/react';
 import axios from 'axios';
 import SingleSelectComponent from '../SingleSelectComponent';
 
+interface Option {
+  label: string;
+  value: string;
+}
+
 const SearchBar = () => {
   const router = useRouter();
-  const [specialization, setSpecialization] = useState(null);
-  const [specializationList, setSpecializationList] = useState([]);
-  const [city, setCity] = useState(null);
-  const [cityList, setCityList] = useState([]);
+  const [specialization, setSpecialization] = useState<Option | null>(null);
+  const [specializationList, setSpecializationList] = useState<string[]>([]);
+  const [city, setCity] = useState<Option | null>(null);
+  const [cityList, setCityList] = useState<string[]>([]);
 
   useEffect(() => {
     // Fetch filters from backend
@@ -25,14 +30,14 @@ const SearchBar = () => {
       });
   }, []);
 
-  const loadCityOptions = (inputValue: string, callback: (options: { label: string, value: string }[]) => void) => {
+  const loadCityOptions = (inputValue: string, callback: (options: Option[]) => void) => {
     const filteredOptions = cityList
       .filter((city: string) => city.toLowerCase().includes(inputValue.toLowerCase()))
       .map((city: string) => ({ label: city, value: city }));
     callback(filteredOptions);
   };
 
-  const loadSpecializationOptions = (inputValue: string, callback: (options: { label: string, value: string }[]) => void) => {
+  const loadSpecializationOptions = (inputValue: string, callback: (options: Option[]) => void) => {
     const filteredOptions = specializationList
       .filter((spec: string) => spec.toLowerCase().includes(inputValue.toLowerCase()))
       .map((spec: string) => ({ label: spec, value: spec }));
@@ -61,7 +66,7 @@ const SearchBar = () => {
             setValue={setSpecialization}
             loadOptions={loadSpecializationOptions}
             defaultOptions={specializationList.map((spec: string) => ({ label: spec, value: spec }))}
-            // label="Pesquisar"
+            label=""
             placeholder="Especialidade"
           />
           <SingleSelectComponent
@@ -69,7 +74,7 @@ const SearchBar = () => {
             setValue={setCity}
             loadOptions={loadCityOptions}
             defaultOptions={cityList.map((city: string) => ({ label: city, value: city }))}
-            // label="Cidade"
+            label=""
             placeholder="Cidade"
           />
           <Button onClick={handleSearch} colorScheme="orange" alignSelf={{ base: 'stretch', md: 'flex-end' }} width={{ base: '100%', md: 'auto' }} minWidth="120px">

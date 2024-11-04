@@ -1,7 +1,7 @@
 'use client';
 import { Box, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar, Tabs, TabList, TabPanels, Tab, TabPanel, Tooltip } from '@chakra-ui/react';
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
-import { FaWhatsapp, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaSnapchat, FaCheckCircle } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaSnapchat, FaCheckCircle, FaGlobe } from 'react-icons/fa';
 import React, { FC } from 'react';
 import { HealthProfessional } from '@/types/HealthProfessional';
 
@@ -67,7 +67,7 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
           <PhoneIcon />
           <Text>
             {props.phones?.map((phone, index) => (
-              <span key={index}>
+              <React.Fragment key={index}>
                 {phone.phone_number}
                 {phone.has_whatsapp && (
                   <Link href={`https://wa.me/${phone.phone_number}`} color="teal.500" isExternal>
@@ -75,7 +75,7 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
                   </Link>
                 )}
                 {index < props.phones.length - 1 && ', '}
-              </span>
+              </React.Fragment>
             )) || 'Telefones não disponíveis'}
           </Text>
         </HStack>
@@ -92,38 +92,37 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
         <Text fontWeight="bold">Redes Sociais:</Text>
         {props.social_medias?.length > 0 ? (
           <HStack spacing={3}>
-            {props.social_medias.map((social, index) => (
-              <Link
-                key={index}
-                href={social.profile_url}
-                isExternal
-                bg="transparent"
-                color={
-                  social.platform === 'Facebook' ? 'blue.600' :
-                  social.platform === 'Twitter' ? 'blue.400' :
-                  social.platform === 'Instagram' ? 'pink.600' :
-                  social.platform === 'LinkedIn' ? 'blue.700' :
-                  social.platform === 'Pinterest' ? 'red.600' :
-                  social.platform === 'TikTok' ? 'black' :
-                  social.platform === 'YouTube' ? 'red.600' :
-                  social.platform === 'Snapchat' ? 'yellow.500' : 'gray.500'
-
-                }
-                _hover={{ bg: 'orange.400' }}
-              >
-                <Icon as={
-                  social.platform === 'Facebook' ? FaFacebook :
-                  social.platform === 'Twitter' ? FaTwitter :
-                  social.platform === 'Instagram' ? FaInstagram :
-                  social.platform === 'LinkedIn' ? FaLinkedin :
-                  social.platform === 'Pinterest' ? FaPinterest :
-                  social.platform === 'TikTok' ? FaTiktok :
-                  social.platform === 'YouTube' ? FaYoutube :
-                  social.platform === 'Snapchat' ? FaSnapchat : null
-
-                } boxSize={6} />
-              </Link>
-            ))}
+            {props.social_medias.map((social, index) => {
+              const icon = social.platform === 'Facebook' ? FaFacebook :
+                           social.platform === 'Twitter' ? FaTwitter :
+                           social.platform === 'Instagram' ? FaInstagram :
+                           social.platform === 'LinkedIn' ? FaLinkedin :
+                           social.platform === 'Pinterest' ? FaPinterest :
+                           social.platform === 'TikTok' ? FaTiktok :
+                           social.platform === 'YouTube' ? FaYoutube :
+                           social.platform === 'Snapchat' ? FaSnapchat : FaGlobe;
+              return (
+                <Link
+                  key={index}
+                  href={social.profile_url}
+                  isExternal
+                  bg="transparent"
+                  color={
+                    social.platform === 'Facebook' ? 'blue.600' :
+                    social.platform === 'Twitter' ? 'blue.400' :
+                    social.platform === 'Instagram' ? 'pink.600' :
+                    social.platform === 'LinkedIn' ? 'blue.700' :
+                    social.platform === 'Pinterest' ? 'red.600' :
+                    social.platform === 'TikTok' ? 'black' :
+                    social.platform === 'YouTube' ? 'red.600' :
+                    social.platform === 'Snapchat' ? 'yellow.500' : 'gray.500'
+                  }
+                  _hover={{ bg: 'orange.400' }}
+                >
+                  <Icon as={icon} boxSize={6} />
+                </Link>
+              );
+            })}
           </HStack>
         ) : (
           <Text>Redes sociais não disponíveis</Text>
