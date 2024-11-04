@@ -1,6 +1,6 @@
 import { Box, Image, Text, VStack, HStack, Icon, Divider, Link, Badge, Avatar } from '@chakra-ui/react';
-import { StarIcon, PhoneIcon, EmailIcon } from '@chakra-ui/icons';
-import { FaWhatsapp } from 'react-icons/fa';
+// import { StarIcon, PhoneIcon, EmailIcon } from '@chakra-ui/icons';
+// import { FaWhatsapp } from 'react-icons/fa';
 import { FC } from 'react';
 import { HealthProfessional } from '@/types/HealthProfessional';
 
@@ -24,7 +24,7 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
             {props.name}
           </Text>
           <Text fontSize="lg" color="gray.500">
-            {props.specializations.map(specialization => specialization.name).join(', ')}
+            {props.specializations?.map(specialization => specialization.name).join(', ')}
           </Text>
           {/* <HStack spacing={1}>
             {Array(5)
@@ -56,18 +56,18 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
       <VStack spacing={2} align="start" flex="1">
         <Text fontWeight="bold">Contato:</Text>
         <HStack spacing={3}>
-          <PhoneIcon />
+          {/* <PhoneIcon /> */}
           <Text>
-            {props.phones.map(phone => phone.phone_number).join(', ')}
+            {props.phones?.map(phone => phone.phone_number).join(', ')}
           </Text>
         </HStack>
         <HStack spacing={3}>
-          <EmailIcon />
+          {/* <EmailIcon /> */}
           <Text>{props.email}</Text>
         </HStack>
         <HStack spacing={3}>
-          <Icon as={FaWhatsapp} />
-          <Link href={`https://wa.me/${props.phones[0].phone_number}`} color="teal.500" isExternal>
+          {/* <Icon as={FaWhatsapp} /> */}
+          <Link href={`https://wa.me/${props.phones?.[0]?.phone_number}`} color="teal.500" isExternal>
             WhatsApp
           </Link>
         </HStack>
@@ -78,7 +78,7 @@ const HealthProfessionalCard: FC<HealthProfessional> = (props: HealthProfessiona
       {/* Endereços */}
       <VStack spacing={2} align="start" flex="1">
         <Text fontWeight="bold">Endereços:</Text>
-        {props.addresses.map((address, index) => (
+        {props.addresses?.map((address, index) => (
           <Box key={index} p={2} w="full" bg="gray.50" borderRadius="md" className="shadow-sm">
             <Text>{address.street}</Text>
             <Text>{`${address.city}, ${address.state}`}</Text>

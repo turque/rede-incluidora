@@ -1,45 +1,32 @@
-'use client'
-
-import { useEffect, useState, FC } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { Box, VStack } from '@chakra-ui/react';
-import HealthProfessionalCard from '@/components/HealthProfessionalCard/HealthProfessionalCard';
-import { HealthProfessional } from '@/types/HealthProfessional';
+import { Box, VStack, Text } from '@chakra-ui/react';
+import HealthProfessionalCard from '@/components/HealthProfessionalCard';
 
 
-const PesquisaPage: FC = () => {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<HealthProfessional[] | null>(null);
+const Resultado = async ({ searchParams }) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const queryString = new URLSearchParams(searchParams).toString();
 
-  useEffect(() => {
-    interface SearchResponse {
-      data: HealthProfessional[];
-    }
-
-    axios.post<SearchResponse>('/api/search', { query })
-      .then((response: SearchResponse) => {
-        setResults(response.data);
-      })
-      .catch((error: unknown) => {
-        console.error('Error fetching search results:', error);
-      });
-  },
-  []);
+  const response = await fetch(`${apiUrl}/api/v1/search?${queryString}`);
+  const results = await response.json();
+  console.log(results);
 
   return (
-    <Box className="min-h-screen py-1 flex justify-center" w='75%'>
+    <Box className="min-h-screen py-1 flex justify-center" w="75%">
       <VStack spacing={2}>
-        {results?.map((professional: HealthProfessional, index: number) => (
-          <HealthProfessionalCard
-            key={index}
-            {...professional}
-          />
-        ))}
+        {results.length > 0 ? (
+          results.map((result, index) => (
+            <Box key={index} p={4} borderWidth={1} borderRadius="lg">
+              <HealthProfessionalCard data={result} />
+            </Box>
+          ))
+        ) : (
+          <Box p={4} borderWidth={1} borderRadius="lg" className="bg-gray-100 text-center">
+            <Text fontSize="lg" color="gray.500">Não foram encontrados resultados. Por favor, refaça a pesquisa.</Text>
+          </Box>
+        )}
       </VStack>
     </Box>
   );
 };
 
-export default PesquisaPage;
+export default Resultado;
