@@ -12,14 +12,11 @@ const SearchBar = () => {
   const [specializationList, setSpecializationList] = useState([]);
   const [city, setCity] = useState(null);
   const [cityList, setCityList] = useState([]);
-  const [insurance, setInsurance] = useState(null);
-  const [insuranceList, setInsuranceList] = useState([]);
 
   useEffect(() => {
     // Fetch filters from backend
     axios.get('/api/filters')
       .then(response => {
-        setInsuranceList(response.data.insurances);
         setCityList(response.data.city);
         setSpecializationList(response.data.specializations);
       })
@@ -27,13 +24,6 @@ const SearchBar = () => {
         console.error('Error fetching filters:', error);
       });
   }, []);
-
-  const loadInsuranceOptions = (inputValue, callback) => {
-    const filteredOptions = insuranceList
-      .filter(plan => plan.toLowerCase().includes(inputValue.toLowerCase()))
-      .map(plan => ({ label: plan, value: plan }));
-    callback(filteredOptions);
-  };
 
   const loadCityOptions = (inputValue, callback) => {
     const filteredOptions = cityList
@@ -50,10 +40,14 @@ const SearchBar = () => {
   };
 
   const handleSearch = async () => {
+    if (!specialization && !city) {
+      alert('Por favor, informe pelo menos um critério de pesquisa.');
+      return;
+    }
+
     const queryParams = new URLSearchParams();
     if (specialization) queryParams.append('search', specialization.value);
     if (city) queryParams.append('city', city.value);
-    if (insurance) queryParams.append('insurance', insurance.value);
 
     router.push(`/resultado?${queryParams.toString()}`);
   };
@@ -67,31 +61,20 @@ const SearchBar = () => {
             setValue={setSpecialization}
             loadOptions={loadSpecializationOptions}
             defaultOptions={specializationList.map(spec => ({ label: spec, value: spec }))}
-            label="Pesquisar"
-            placeholder="Selecione ou digite a especialidade"
-          />
-          <Button onClick={handleSearch} colorScheme="orange" alignSelf={{ base: 'stretch', md: 'flex-end' }}>
-            Pesquisar
-          </Button>
-        </Flex>
-
-        <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
-          <SingleSelectComponent
-            value={insurance}
-            setValue={setInsurance}
-            loadOptions={loadInsuranceOptions}
-            defaultOptions={insuranceList.map(plan => ({ label: plan, value: plan }))}
-            label="Plano de Saúde"
-            placeholder="Selecione ou digite o plano de saúde"
+            // label="Pesquisar"
+            placeholder="Especialidade"
           />
           <SingleSelectComponent
             value={city}
             setValue={setCity}
             loadOptions={loadCityOptions}
             defaultOptions={cityList.map(city => ({ label: city, value: city }))}
-            label="Cidade"
-            placeholder="Selecione ou digite o nome da cidade"
+            // label="Cidade"
+            placeholder="Cidade"
           />
+          <Button onClick={handleSearch} colorScheme="orange" alignSelf={{ base: 'stretch', md: 'flex-end' }} width={{ base: '100%', md: 'auto' }} minWidth="120px">
+            Pesquisar
+          </Button>
         </Flex>
       </Flex>
     </Box>
