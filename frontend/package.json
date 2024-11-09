@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "lint:debug": "eslint --print-config .eslintrc.json"
   },
   "dependencies": {
@@ -35,24 +33,12 @@
     "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
-    "@chakra-ui/storybook-addon": "^5.1.0",
-    "@chromatic-com/storybook": "^1.7.0",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-interactions": "^8.2.9",
-    "@storybook/addon-links": "^8.2.9",
-    "@storybook/addon-onboarding": "^8.2.9",
-    "@storybook/blocks": "^8.2.9",
-    "@storybook/nextjs": "^8.2.9",
-    "@storybook/react": "^8.2.9",
-    "@storybook/test": "^8.2.9",
     "@types/node": "^22.5.0",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^14.2.0",
-    "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8.4.41",
-    "storybook": "^8.2.9",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4"
   },
