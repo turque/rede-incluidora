@@ -1,5 +1,6 @@
 {
     "version": 2,
+    "devCommand": "./prestart.sh",
     "builds": [
       {
         "src": "app/main.py",
