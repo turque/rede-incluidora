@@ -20,8 +20,8 @@ strategy = "rolling"
 BACKEND_CORS_ORIGINS = "https://rede-incluidora.vercel.app/"
 FIRST_SUPERUSER = "arnaldo@turque.com.br"
 
-POSTGRES_SERVER="localhost"
-POSTGRES_DB="rede_incluidora"
+POSTGRES_HOST="localhost"
+POSTGRES_DATABASE="rede_incluidora"
 POSTGRES_USER="postgres"
 POSTGRES_PORT = 5432
 

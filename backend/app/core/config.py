@@ -49,11 +49,11 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SENTRY_DSN: HttpUrl | None = None
-    POSTGRES_SERVER: str = "localhost"
+    POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_USER: str = "postgres"
     POSTGRES_PASSWORD: str = "changethis"
-    POSTGRES_DB: str = "app"
+    POSTGRES_DATABASE: str = "app"
 
     @computed_field  # type: ignore[misc]
     @property
@@ -62,9 +62,9 @@ class Settings(BaseSettings):
             scheme="postgresql+psycopg",
             username=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD,
-            host=self.POSTGRES_SERVER,
+            host=self.POSTGRES_HOST,
             port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DB,
+            path=self.POSTGRES_DATABASE,
         )
 
     # SQLALCHEMY_DATABASE_URI: str = ""
