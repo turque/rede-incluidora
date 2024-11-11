@@ -1,3 +1,6 @@
+import logging.config
+import logging
+import sys
 import sentry_sdk
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
@@ -13,6 +16,34 @@ def custom_generate_unique_id(route: APIRoute) -> str:
 
 if settings.SENTRY_DSN and settings.ENVIRONMENT != "local":
     sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)
+
+# Logging configuration
+logging_config = {
+    "version": 1,
+    "formatters": {
+        "json": {
+            "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
+            "format": "%(asctime)s %(process)s %(levelname)s %(name)s %(module)s %(funcName)s %(lineno)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "json",
+            "stream": sys.stderr,
+        }
+    },
+    "root": {
+        "level": "DEBUG",
+        "handlers": [
+            "console"
+        ],
+        "propagate": True
+    }
+}
+
+logging.config.dictConfig(logging_config)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
