@@ -3,15 +3,15 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Instalar corepack para gerenciar versões do Yarn
-RUN corepack enable
+# RUN corepack enable
 COPY package.json yarn.lock* ./
 # Usar corepack para garantir a versão correta do Yarn
-RUN corepack prepare yarn@4.4.0 --activate
+# RUN corepack prepare yarn@4.4.0 --activate
 RUN yarn --immutable
 
 FROM base AS builder
 WORKDIR /app
-COPY --from=base /app/node_modules ./node_modules
+# COPY --from=base /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1

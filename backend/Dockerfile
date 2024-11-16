@@ -1,4 +1,7 @@
-FROM python:3.11-slim
+FROM python:3.11-slim AS builder
+
+# Crie um grupo e um usuário padrão
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
 WORKDIR /app/
 
@@ -16,9 +19,17 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python
 # Copy poetry.lock* in case it doesn't exist in the repo
 COPY ./pyproject.toml ./poetry.lock* /app/
 
-# Allow installing dev dependencies to run tests
-ARG INSTALL_DEV=false
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --only main ; fi"
+EXPOSE 8000
+
+FROM builder AS development
+
+RUN poetry install --no-root
+
+CMD [ "fastapi", "dev" ]
+
+FROM builder AS production
+
+RUN poetry install --no-root --only main
 
 ENV PYTHONPATH=/app
 
@@ -32,10 +43,12 @@ COPY ./tests-start.sh /app/
 
 COPY ./app /app/app
 
-RUN chmod +x /app/scripts/prestart.sh
+RUN chmod +x /app/prestart.sh && \
+    chmod +x /app/tests-start.sh
 
-ENTRYPOINT [ "/app/scripts/prestart.sh" ]
+# Ajuste as permissões e mude para o usuário padrão
+RUN chown -R appuser:appgroup /app
+USER appuser
 
-EXPOSE 8000
-
-CMD [ "fastapi", "run" ]
+# Comando padrão
+CMD ["fastapi", "run"]
