@@ -1,17 +1,29 @@
 variable "region" {
-  description = "A região da AWS onde os recursos serão criados"
-  default     = "us-east-1"
+  description = "A região do GCP onde os recursos serão criados"
+  default     = "us-central1"
 }
 
 variable "instance_type" {
   description = "O tipo de instância a ser utilizado"
-  default     = "t2.micro"
+  default     = "e2-micro"
 }
 
-variable "ami" {
-  description = "ID da AMI a ser utilizada"
+variable "image" {
+  description = "Nome da imagem a ser utilizada"
 }
 
-variable "my_ip" {
-  description = "Seu endereço IP para acesso SSH"
+variable "project" {
+  description = "ID do projeto GCP"
+}
+
+variable "db_user" {
+  description = "Usuário do banco de dados"
+}
+
+variable "db_password" {
+  description = "Senha do banco de dados"
+}
+
+variable "db_name" {
+  description = "Nome do banco de dados"
 }
