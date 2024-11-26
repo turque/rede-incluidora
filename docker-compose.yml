@@ -99,10 +99,11 @@ services:
     networks:
       - traefik-public
       - default
+    depends_on:
+      - backend
     build:
       context: ./frontend
       args:
-        - VITE_API_URL=https://${DOMAIN?Variable not set}
         - NODE_ENV=production
     labels:
       - traefik.enable=true
@@ -123,21 +124,8 @@ services:
       - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect
       - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.middlewares=https-redirect,${STACK_NAME?Variable not set}-www-redirect
 
-  smtp:
-    image: rnwood/smtp4dev:v3
-    restart: always
-    ports:
-      - '3000:80'
-      - '25:25'
-      - '143:143'
-    volumes:
-        - smtp4dev-data:/smtp4dev
-    environment:
-      - ServerOptions__HostName=smtp4dev
-
 volumes:
   app-db-data:
-  smtp4dev-data:
 
 networks:
   traefik-public:
