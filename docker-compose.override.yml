@@ -6,7 +6,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "80:80"
-      - "8090:8080"
+      - "443:443"
+      - "8080:8080"
     # Duplicate the command from docker-compose.yml to add --api.insecure=true
     command:
       # Enable Docker in Traefik, so that it reads labels from Docker services
@@ -35,7 +36,7 @@ services:
       - traefik.constraint-label=traefik-public
       # Dummy https-redirect middleware that doesn't really redirect, only to
       # allow running it locally
-      - traefik.http.middlewares.https-redirect.contenttype.autodetect=false
+      - traefik.http.middlewares.https-redirect.contenttype.autodetect=true
     networks:
       - traefik-public
       - default
@@ -48,7 +49,7 @@ services:
   adminer:
     restart: "no"
     ports:
-      - "8080:8080"
+      - "8090:8080"
 
   backend:
     restart: "no"
@@ -80,10 +81,7 @@ services:
       context: ./frontend
       args:
         - NODE_ENV=development
-    ports:
-      - "3000:3000"
-    # environment:
-    #   API_URL: "http://localhost:8000"
+
 
 networks:
   traefik-public:
