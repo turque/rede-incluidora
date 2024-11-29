@@ -20,7 +20,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     // Fetch filters from backend
-    axios.get('/api/filters')
+    axios.get('/api/v1/search/filters')
       .then((response: { data: { city: string[], specializations: string[] } }) => {
         setCityList(response.data.city);
         setSpecializationList(response.data.specializations);
@@ -51,7 +51,7 @@ const SearchBar = () => {
     }
 
     const queryParams = new URLSearchParams();
-    if (specialization) queryParams.append('search', specialization.value);
+    if (specialization) queryParams.append('specialization', specialization.value);
     if (city) queryParams.append('city', city.value);
 
     router.push(`/resultado?${queryParams.toString()}`);

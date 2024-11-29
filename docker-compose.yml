@@ -90,8 +90,8 @@ services:
       - traefik.http.middlewares.${STACK_NAME?Variable not set}-www-redirect.redirectregex.replacement=http$${1}://${DOMAIN?Variable not set}/$${3}
 
       # Enable www redirection for HTTP and HTTPS
-      # - traefik.http.routers.${STACK_NAME?Variable not set}-backend-http.middlewares=https-redirect,${STACK_NAME?Variable not set}-www-redirect
-      # - traefik.http.routers.${STACK_NAME?Variable not set}-backend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect
+      - traefik.http.routers.${STACK_NAME?Variable not set}-backend-http.middlewares=https-redirect,${STACK_NAME?Variable not set}-www-redirect
+      - traefik.http.routers.${STACK_NAME?Variable not set}-backend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect
 
   frontend:
     image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
@@ -105,6 +105,8 @@ services:
       context: ./frontend
       args:
         - NODE_ENV=production
+    environment:
+      - API_URL=${API_URL?Variable not set}
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-public
@@ -121,8 +123,8 @@ services:
       - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.tls.certresolver=le
 
       # Enable www redirection for HTTP and HTTPS
-      # - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect
-      # - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.middlewares=https-redirect,${STACK_NAME?Variable not set}-www-redirect
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.middlewares=https-redirect,${STACK_NAME?Variable not set}-www-redirect
 
 volumes:
   app-db-data:

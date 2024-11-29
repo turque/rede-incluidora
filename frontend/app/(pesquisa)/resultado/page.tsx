@@ -3,12 +3,11 @@ import HealthProfessionalCard from '@/components/HealthProfessionalCard';
 import { HealthProfessional } from '@/types/HealthProfessional';
 
 
-const Resultado = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-  const apiUrl = process.env.API_URL;
-  const queryString = new URLSearchParams(searchParams).toString();
 
-  const response = await fetch(`${apiUrl}/api/v1/search?${queryString}`);
-  const results = await response.json();
+const Resultado = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+  const queryString = new URLSearchParams(searchParams).toString();
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/search?${queryString}`);
+  let results = await fetch(apiUrl).then((response) => response.json());
 
   return (
     <Box className="min-h-screen py-1 flex justify-center" w="75%">

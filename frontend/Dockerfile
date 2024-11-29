@@ -24,11 +24,11 @@ FROM base AS builder
 WORKDIR /app
 
 # Declare ARG again here
-ARG NEXT_PUBLIC_BACKEND_URL
+ARG API_URL
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN echo "NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL" >> .env
+RUN echo "API_URL=$API_URL" >> .env
 RUN npm run build
 
 # 3. Production image, copy all the files and run next
