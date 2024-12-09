@@ -2,12 +2,27 @@ import { Box, Container, Text } from '@chakra-ui/react';
 import SearchBar from '@/components/SearchBar';
 import FilterCard from '@/components/FilterCard';
 
+interface Filter {
+  city: string[];
+  specializations: string[];
+  insurances: string[];
+}
 
-export default async function Home() {
+interface HomeProps {
+  filters: Filter;
+}
+
+async function fetchFilters() {
   const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
   let filters = await fetch(apiUrl).then((response) => response.json());
-  // let data = await fetch('http://backend:8000/api/v1/search/filters');
-  // let filters = await data.json();
+  if (!filters) {
+    return { notFound: true }
+  }
+  return filters;
+}
+
+export default async function Home() {
+  const filters = await fetchFilters();
 
   return (
     <Container maxW="container.xl" py={8}>
