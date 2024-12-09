@@ -4,7 +4,7 @@ import FilterCard from '@/components/FilterCard';
 
 
 export default async function Home() {
-  let data = await fetch('/api/v1/search/filters');
+  let data = await fetch(`${process.env.API_URL}/api/v1/search/filters`);
   let filters = await data.json();
 
   return (
