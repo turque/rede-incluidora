@@ -4,10 +4,10 @@ import FilterCard from '@/components/FilterCard';
 
 
 export default async function Home() {
-  let data = await fetch('http://backend:8000/api/v1/search/filters');
-  let filters = await data.json();
-  // const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
-  // let filters = await fetch(apiUrl).then((response) => response.json());
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
+  let filters = await fetch(apiUrl).then((response) => response.json());
+  // let data = await fetch('http://backend:8000/api/v1/search/filters');
+  // let filters = await data.json();
 
   return (
     <Container maxW="container.xl" py={8}>
