@@ -17,7 +17,7 @@ RUN \
   fi
 
 # Accept build arguments
-ARG NEXT_PUBLIC_BACKEND_URL
+ARG API_URL
 
 # 2. Rebuild the source code only when needed
 FROM base AS builder

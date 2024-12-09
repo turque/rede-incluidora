@@ -1,58 +1,32 @@
-'use client';
+"use client";
+
 
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, Flex, Button } from '@chakra-ui/react';
-import axios from 'axios';
-import SingleSelectComponent from '../SingleSelectComponent';
+import { FormControl, FormLabel } from '@chakra-ui/react';
+import Select from 'react-select';
 
-interface Option {
-  label: string;
-  value: string;
+interface SearchBarProps {
+  cityOptions: string[];
+  specializationOptions: string[];
 }
 
-const SearchBar = () => {
+export default function SearchBar({ cityOptions, specializationOptions }: SearchBarProps) {
   const router = useRouter();
-  const [specialization, setSpecialization] = useState<Option | null>(null);
-  const [specializationList, setSpecializationList] = useState<string[]>([]);
-  const [city, setCity] = useState<Option | null>(null);
-  const [cityList, setCityList] = useState<string[]>([]);
+  const [selectedSpecialization, setSelectedSpecialization] = useState<{ label: string; value: string } | null>(null);
+  const [selectedCity, setSelectedCity] = useState<{ label: string; value: string } | null>(null);
 
-  useEffect(() => {
-    // Fetch filters from backend
-    axios.get('/api/v1/search/filters')
-      .then((response: { data: { city: string[], specializations: string[] } }) => {
-        setCityList(response.data.city);
-        setSpecializationList(response.data.specializations);
-      })
-      .catch((error: any) => {
-        console.error('Error fetching filters:', error);
-      });
-  }, []);
-
-  const loadCityOptions = (inputValue: string, callback: (options: Option[]) => void) => {
-    const filteredOptions = cityList
-      .filter((city: string) => city.toLowerCase().includes(inputValue.toLowerCase()))
-      .map((city: string) => ({ label: city, value: city }));
-    callback(filteredOptions);
-  };
-
-  const loadSpecializationOptions = (inputValue: string, callback: (options: Option[]) => void) => {
-    const filteredOptions = specializationList
-      .filter((spec: string) => spec.toLowerCase().includes(inputValue.toLowerCase()))
-      .map((spec: string) => ({ label: spec, value: spec }));
-    callback(filteredOptions);
-  };
 
   const handleSearch = async () => {
-    if (!specialization && !city) {
+    if (!selectedSpecialization && !selectedCity) {
       alert('Por favor, informe pelo menos um critério de pesquisa.');
       return;
     }
 
     const queryParams = new URLSearchParams();
-    if (specialization) queryParams.append('specialization', specialization.value);
-    if (city) queryParams.append('city', city.value);
+    if (selectedSpecialization) queryParams.append('specialization', selectedSpecialization.value);
+    if (selectedCity) queryParams.append('city', selectedCity.value);
 
     router.push(`/resultado?${queryParams.toString()}`);
   };
@@ -61,22 +35,24 @@ const SearchBar = () => {
     <Box bg="white" p={6} borderRadius="md" boxShadow="md" mb={8} className="bg-white p-6 rounded-md shadow-md mb-8">
       <Flex direction="column" gap={4}>
         <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
-          <SingleSelectComponent
-            value={specialization}
-            setValue={setSpecialization}
-            loadOptions={loadSpecializationOptions}
-            defaultOptions={specializationList.map((spec: string) => ({ label: spec, value: spec }))}
-            label=""
-            placeholder="Especialidade"
-          />
-          <SingleSelectComponent
-            value={city}
-            setValue={setCity}
-            loadOptions={loadCityOptions}
-            defaultOptions={cityList.map((city: string) => ({ label: city, value: city }))}
-            label=""
-            placeholder="Cidade"
-          />
+          <FormControl>
+            <FormLabel />
+            <Select
+              defaultValue={selectedSpecialization}
+              onChange={(option) => setSelectedSpecialization(option)}
+              options={specializationOptions.map((item: string) => ({ label: item, value: item }))}
+              placeholder='Especialidade'
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel />
+            <Select
+              defaultValue={selectedSpecialization}
+              onChange={(option) => setSelectedCity(option)}
+              options={cityOptions.map((item: string) => ({ label: item, value: item }))}
+              placeholder='Cidade'
+            />
+          </FormControl>
           <Button onClick={handleSearch} colorScheme="orange" alignSelf={{ base: 'stretch', md: 'flex-end' }} width={{ base: '100%', md: 'auto' }} minWidth="120px">
             Pesquisar
           </Button>
@@ -85,5 +61,3 @@ const SearchBar = () => {
     </Box>
   );
 };
-
-export default SearchBar;
