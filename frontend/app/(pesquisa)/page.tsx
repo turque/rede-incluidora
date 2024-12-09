@@ -2,27 +2,11 @@ import { Box, Container, Text } from '@chakra-ui/react';
 import SearchBar from '@/components/SearchBar';
 import FilterCard from '@/components/FilterCard';
 
-interface Filter {
-  city: string[];
-  specializations: string[];
-  insurances: string[];
-}
-
-interface HomeProps {
-  filters: Filter;
-}
-
-async function fetchFilters() {
-  const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
-  let filters = await fetch(apiUrl).then((response) => response.json());
-  if (!filters) {
-    return { notFound: true }
-  }
-  return filters;
-}
+export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const filters = await fetchFilters();
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
+  let filters = await fetch(apiUrl).then((response) => response.json());
 
   return (
     <Container maxW="container.xl" py={8}>
