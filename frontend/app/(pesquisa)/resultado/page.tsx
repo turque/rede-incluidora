@@ -6,7 +6,7 @@ import { HealthProfessional } from '@/types/HealthProfessional';
 
 const Resultado = async ({ searchParams }: { searchParams: Record<string, string> }) => {
   const queryString = new URLSearchParams(searchParams).toString();
-  const apiUrl = new URL(`http://localhost:8000/api/v1/search?${queryString}`);
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/search?${queryString}`);
   let results = await fetch(apiUrl).then((response) => response.json());
 
   return (
