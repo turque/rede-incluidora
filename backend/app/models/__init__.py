@@ -10,3 +10,4 @@ from .professionals_phones import *  # noqa
 from .professionals_insurances_link import *  # noqa
 from .professionals_specializations_link import *  # noqa
 from .professionals_social_media import *  # noqa
+from .posts import *  # noqa
