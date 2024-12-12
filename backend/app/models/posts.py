@@ -1,8 +1,6 @@
 from datetime import datetime, timezone
 
-from sqlmodel import Field, Relationship, SQLModel
-
-from .users import User
+from sqlmodel import Field, SQLModel
 
 
 # Shared properties
@@ -16,8 +14,7 @@ class PostBase(SQLModel):
 class Post(PostBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     author_id: int = Field(foreign_key="user.id")
-    user: "User" = Relationship(back_populates="posts")
-    is_active: bool = False
+    # author: "User" = Relationship(back_populates="posts")
 
 
 class PostPublic(PostBase):
