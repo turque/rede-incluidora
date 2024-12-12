@@ -1,6 +1,6 @@
 from sqlmodel import Session, create_engine, select
 
-from app import crud, models
+from app import models, repositories
 from app.core.config import settings
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
@@ -31,4 +31,4 @@ def init_db(session: Session) -> None:
             is_superuser=True,
             is_active=True,
         )
-        user = crud.create_user(session=session, user_create=user_in)
+        user = repositories.create_user(session=session, user_create=user_in)

@@ -3,8 +3,8 @@ from typing import Any
 from fastapi import APIRouter
 
 from app.api.deps import SessionDep
-from app.crud import user
 from app.models import UserPublic
+from app.repositories import user
 
 router = APIRouter()
 
