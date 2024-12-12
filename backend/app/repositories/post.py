@@ -11,5 +11,5 @@ def get_posts(*, session: Session) -> PostsPublic:
 
 def get_by_id(post_id: int, session: Session) -> PostPublic | None:
     statement = select(Post).where(Post.id == post_id)
-    post = session.exec(statement).all()
+    post = session.exec(statement).one()
     return post

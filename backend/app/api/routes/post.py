@@ -7,8 +7,8 @@ from app.repositories import post
 router = APIRouter()
 
 
-@router.get("/", response_model=PostsPublic)
-def get_posts(session: SessionDep) -> PostsPublic:
+@router.get("/", response_model=list[PostPublic])
+def get_posts(session: SessionDep) -> list[PostsPublic]:
     return post.get_posts(session=session)
 
 
