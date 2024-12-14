@@ -6,6 +6,7 @@ from sqlmodel import Session, SQLModel, create_engine, select
 from app.core.config import settings
 from app.models import (
     Address,
+    Article,
     Insurance,
     Phone,
     Post,
@@ -189,11 +190,21 @@ def create_fake_data():
     introducao = fake.paragraph(nb_sentences=3)
     corpo = "\n\n".join([fake.paragraph(nb_sentences=5) for _ in range(5)])
     conclusao = fake.paragraph(nb_sentences=3)
-    texto_blog = f"\n\n{introducao}\n\n{corpo}\n\n{conclusao}"
+    texto_completo = f"\n\n{introducao}\n\n{corpo}\n\n{conclusao}"
     posts = [
         Post(
             title=fake.sentence(nb_words=6),
-            content=texto_blog,
+            content=texto_completo,
+            created_at=fake.date_time_this_month(),
+            published=fake.boolean(),
+            is_active=fake.boolean(),
+        )
+    ]
+    articles = [
+        Article(
+            title=fake.sentence(nb_words=6),
+            content=texto_completo,
+            summary=fake.sentence(nb_words=40),
             created_at=fake.date_time_this_month(),
             published=fake.boolean(),
             is_active=fake.boolean(),
@@ -209,6 +220,7 @@ def create_fake_data():
         specialization_ids,
         insurance_ids,
         posts,
+        articles,
     )
 
 
@@ -226,6 +238,7 @@ def populate_database(num_records: int):
                 specialization_ids,
                 insurance_ids,
                 posts,
+                articles,
             ) = create_fake_data()
 
             session.add(user)
@@ -266,6 +279,11 @@ def populate_database(num_records: int):
             for post in posts:
                 post.author_id = user.id
                 session.add(post)
+            session.commit()
+
+            for article in articles:
+                article.author_id = user.id
+                session.add(article)
             session.commit()
 
 
