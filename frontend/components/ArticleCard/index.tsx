@@ -1,6 +1,11 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 
-const ArticleCard = ({ title, summary }) => {
+interface ArticleCardProps {
+  title: string;
+  summary: string;
+}
+
+const ArticleCard: React.FC<ArticleCardProps> = ({ title, summary }) => {
   return (
     <Box
       borderWidth="1px"

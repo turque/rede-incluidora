@@ -24,11 +24,17 @@ const Header = () => {
 
         {/* Menu - Desktop */}
         <HStack spacing={4} display={{ base: "none", md: "flex" }}>
-          <NextLink href="/em-breve" passHref>
+          <NextLink href="/artigos" passHref>
+            <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
+              Artigos
+            </Button>
+          </NextLink>
+
+          {/* <NextLink href="/em-breve" passHref>
             <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
               Produtos e Serviços
             </Button>
-          </NextLink>
+          </NextLink> */}
 
           <NextLink href="/em-breve" passHref>
             <Button as={Link} variant="ghost" colorScheme="orange" size="sm">
@@ -36,7 +42,7 @@ const Header = () => {
             </Button>
           </NextLink>
 
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? (
             <Avatar name="Nome do Usuário" src="" size="sm" />
           ) : (
             <>
@@ -52,7 +58,7 @@ const Header = () => {
                 </Button>
               </NextLink>
             </>
-          )}
+          )} */}
         </HStack>
 
         {/* Menu Hamburger - Mobile */}
@@ -72,11 +78,16 @@ const Header = () => {
             <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
             <DrawerBody>
               <Stack spacing={4}>
-                <NextLink href="/em-breve" passHref>
+                <NextLink href="/artigos" passHref>
+                  <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
+                    Artigos
+                  </Button>
+                </NextLink>
+                {/* <NextLink href="/em-breve" passHref>
                   <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
                     Produtos e Serviços
                   </Button>
-                </NextLink>
+                </NextLink> */}
 
                 <NextLink href="/em-breve" passHref>
                   <Button as={Link} variant="ghost" colorScheme="orange" width="100%" onClick={onClose}>
@@ -84,7 +95,7 @@ const Header = () => {
                   </Button>
                 </NextLink>
 
-                {isAuthenticated ? (
+                {/* {isAuthenticated ? (
                   <Avatar name="Nome do Usuário" src="" size="md" />
                 ) : (
                   <>
@@ -100,7 +111,7 @@ const Header = () => {
                       </Button>
                     </NextLink>
                   </>
-                )}
+                )} */}
               </Stack>
             </DrawerBody>
           </DrawerContent>
