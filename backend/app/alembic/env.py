@@ -34,8 +34,8 @@ def get_url():
     server = os.getenv("POSTGRES_SERVER", "db")
     port = os.getenv("POSTGRES_PORT", "5432")
     db = os.getenv("POSTGRES_DB", "app")
-    # return f"postgresql+psycopg://{user}:{password}@{server}:{port}/{db}"
-    return f"postgresql+psycopg://postgres:changethis@localhost:5432/app"
+    return f"postgresql+psycopg://{user}:{password}@{server}:{port}/{db}"
+    # return f"postgresql+psycopg://postgres:changethis@localhost:5432/app"
 
 
 def run_migrations_offline():
