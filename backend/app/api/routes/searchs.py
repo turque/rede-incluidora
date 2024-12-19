@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
-from app.crud import filters, professional
 from app.models import Filters, ProfessionalDataPublic
+from app.repositories import filters, professional
 
 router = APIRouter()
 
