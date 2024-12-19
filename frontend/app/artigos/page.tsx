@@ -2,8 +2,8 @@ import { Badge, Box, VStack, HStack, Image, Button, Card, CardBody, CardFooter, 
 import NextLink from 'next/link';
 
 export default async function ArticleList() {
-  const apiUrl = new URL('http://localhost:8000/api/v1/article');
-  // const apiUrl = new URL(`${process.env.API_URL}/api/v1/article`);
+  // const apiUrl = new URL('http://localhost:8000/api/v1/article');
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/article`);
   let articles: { id: number; title: string; summary: string }[] = await fetch(apiUrl).then((response) => response.json());
 
   return (

@@ -16,8 +16,8 @@ export default async function Article({
     params: Promise<{ articleId: string }>
   }) {
     const artigo = (await params).articleId
-    const apiUrl = new URL(`http://localhost:8000/api/v1/article/${artigo}`);
-  // const apiUrl = new URL(`${process.env.API_URL}/api/v1/article`);
+    // const apiUrl = new URL(`http://localhost:8000/api/v1/article/${artigo}`);
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/article`);
   let article: Article = await fetch(apiUrl).then((response) => response.json());
 
 

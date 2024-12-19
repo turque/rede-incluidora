@@ -5,8 +5,8 @@ import FilterCard from '@/components/FilterCard';
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const apiUrl = new URL('http://127.0.0.1:8000/api/v1/search/filters');
-  // const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
+  // const apiUrl = new URL('http://127.0.0.1:8000/api/v1/search/filters');
+  const apiUrl = new URL(`${process.env.API_URL}/api/v1/search/filters`);
   let filters = await fetch(apiUrl).then((response) => response.json());
 
   return (
