@@ -3,7 +3,6 @@ import HealthProfessionalCard from '@/components/HealthProfessionalCard';
 import { HealthProfessional } from '@/types/HealthProfessional';
 
 
-
 const Resultado = async ({ searchParams }: { searchParams: Record<string, string> }) => {
   const queryString = new URLSearchParams(searchParams).toString();
   const apiUrl = new URL(`${process.env.API_URL}/api/v1/search?${queryString}`);
