@@ -56,7 +56,7 @@ def recover_password(email: str, session: SessionDep) -> Message:
     """
     Password Recovery
     """
-    user = repositories.get_user_by_email(session=session, email=email)
+    user = repositories.user.get_user_by_email(session=session, email=email)
 
     if not user:
         raise HTTPException(

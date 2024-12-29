@@ -11,7 +11,7 @@ from app.models import (
 )
 
 
-def get_filters(filters: list[dict] | None) -> list:
+def _get_filters(filters: list[dict] | None) -> list:
     """
     Generates a list of conditions based on the provided filters.
 
@@ -66,7 +66,7 @@ def get_professionals(
         list[ProfessionalDataPublic]: A list of professionals matching the
         filter conditions, validated against the ProfessionalDataPublic model.
     """
-    conditions = get_filters(filters)
+    conditions = _get_filters(filters)
 
     statement = select(Professional).distinct().where(Professional.active)
     if conditions:

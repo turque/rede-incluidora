@@ -32,12 +32,14 @@ def get_current_user(session: SessionDep, token: TokenDep) -> User:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
         )
+        print("PAYLOAD", payload)
         token_data = TokenPayload(**payload)
-    except (InvalidTokenError, ValidationError):
+        print("token_data", token_data)
+    except (InvalidTokenError, ValidationError) as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
-        )
+        ) from exc
     user = session.get(User, token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

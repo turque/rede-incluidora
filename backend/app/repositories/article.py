@@ -13,3 +13,10 @@ def get_by_id(article_id: int, session: Session) -> ArticlePublic | None:
     statement = select(Article).where(Article.id == article_id)
     article = session.exec(statement).one()
     return article
+
+
+def create(*, session: Session, article: Article) -> Article:
+    session.add(article)
+    session.commit()
+    session.refresh(article)
+    return article
