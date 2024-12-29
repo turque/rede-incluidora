@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime, timezone
 
 from sqlmodel import Field, SQLModel
@@ -12,13 +13,13 @@ class PostBase(SQLModel):
 
 
 class Post(PostBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    author_id: int = Field(foreign_key="user.id")
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    author_id: uuid.UUID = Field(foreign_key="user.id")
     # author: "User" = Relationship(back_populates="posts")
 
 
 class PostPublic(PostBase):
-    id: int
+    id: uuid.UUID
 
 
 class PostsPublic(PostPublic):

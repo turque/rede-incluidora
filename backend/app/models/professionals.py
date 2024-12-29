@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 
 from pydantic import EmailStr
@@ -30,7 +31,7 @@ class ProfessionalBase(SQLModel):
 
 # Database model, database table inferred from class name
 class Professional(ProfessionalBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     addresses: list["Address"] = Relationship(back_populates="professional")
     phones: list["Phone"] = Relationship(back_populates="professional")
     social_medias: list["SocialMedia"] = Relationship(back_populates="professional")
@@ -43,7 +44,7 @@ class Professional(ProfessionalBase, table=True):
 
 
 class ProfessionalPublic(ProfessionalBase):
-    id: int
+    id: uuid.UUID
 
 
 class ProfessionalDataPublic(ProfessionalPublic):

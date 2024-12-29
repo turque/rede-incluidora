@@ -1,3 +1,4 @@
+import uuid
 from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
@@ -19,6 +20,6 @@ class AddressBase(SQLModel):
 
 # Database model, database table inferred from class name
 class Address(AddressBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    professional_id: int = Field(foreign_key="professional.id")
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    professional_id: uuid.UUID = Field(foreign_key="professional.id")
     professional: "Professional" = Relationship(back_populates="addresses")

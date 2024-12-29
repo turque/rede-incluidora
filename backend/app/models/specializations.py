@@ -1,3 +1,4 @@
+import uuid
 from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
@@ -14,7 +15,7 @@ class SpecializationBase(SQLModel):
 
 
 class Specialization(SpecializationBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     professionals: list["Professional"] = Relationship(
         back_populates="specializations", link_model=ProfessionalSpecialization
     )
